@@ -18,7 +18,6 @@ const RecipeCard = (props: Props) => {
         })
     });
 
-    // const recipe = useAppSelector(state => selectRecipesById(state, props.recipeId));
     const [open, setOpen] = useState(false);
 
     const [deleteRecipe] = useDeleteRecipeMutation();
