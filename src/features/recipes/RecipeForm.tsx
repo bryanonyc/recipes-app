@@ -1,6 +1,7 @@
 import { Button, Form, Input, InputNumber } from 'antd';
-import { useAppSelector } from '../../app/hooks';
-import { selectRecipesById } from './recipesApiSlice';
+import { Recipe } from '../../models/recipe';
+import { useEffect } from 'react';
+import { recipeTagsToString } from './RecipeDetails';
 
 const { TextArea } = Input;
 
@@ -18,20 +19,14 @@ export interface RecipeFormData {
 
 interface Props {
     handleSubmit: Function,
-    recipeId?: number,
+    recipe?: Recipe,
     isLoading: boolean
 }
 
 const RecipeForm = (props: Props) => {
     const [form] = Form.useForm();
-    // let recipe = undefined;
-    // if (props.recipeId) {
+    const recipe = props.recipe;
 
-    // }
-    const recipe = useAppSelector(state => selectRecipesById(state, props.recipeId!));
-
-    // const recipe = props.recipe;
-    console.log('rrrr', recipe);
     const resetForm = () => {
         form.resetFields();
     };
@@ -39,6 +34,25 @@ const RecipeForm = (props: Props) => {
     const handleSubmit = async (values: RecipeFormData) => {
         props.handleSubmit(values);
     };
+
+    useEffect(() => {
+        form.setFieldsValue({
+            title: recipe?.title,
+            description: recipe?.description,
+            ingredients: recipe?.ingredients,
+            directions: recipe?.directions,
+            prepTime: recipe?.prepTime,
+            cookTime: recipe?.cookTime,
+            totalTime: recipe?.totalTime,
+            servings: recipe?.servings,
+        });
+
+        if (recipe?.tags) {
+            form.setFieldsValue({
+                tags: recipeTagsToString(recipe)
+            });
+        }
+    }, [form, recipe]);
 
     return (
         <Form
@@ -55,7 +69,7 @@ const RecipeForm = (props: Props) => {
             >
                 <Input
                     placeholder='Amazing Burgers!'
-                    value='fsfsdfsd'
+                    defaultValue={recipe?.title}
                 />
             </Form.Item>
             <Form.Item
@@ -65,7 +79,7 @@ const RecipeForm = (props: Props) => {
                 <TextArea
                     rows={4}
                     placeholder='The juciest burgers in the world'
-                    value={recipe?.description}
+                    defaultValue={recipe?.description}
                 />
             </Form.Item>
             <Form.Item
@@ -76,7 +90,7 @@ const RecipeForm = (props: Props) => {
                 <TextArea
                     rows={4}
                     placeholder='1 pound ground beef'
-                    value={recipe?.ingredients}
+                    defaultValue={recipe?.ingredients}
                 />
             </Form.Item>
             <Form.Item
@@ -87,7 +101,7 @@ const RecipeForm = (props: Props) => {
                 <TextArea
                     rows={4}
                     placeholder='Heat up the grill...'
-                    value={recipe?.directions}
+                    defaultValue={recipe?.directions}
                 />
             </Form.Item>
             <Form.Item
@@ -98,7 +112,7 @@ const RecipeForm = (props: Props) => {
                 <InputNumber
                     min={1}
                     placeholder='15'
-                    value={recipe?.prepTime}
+                    defaultValue={recipe?.prepTime}
                 />
             </Form.Item>
             <Form.Item
@@ -109,7 +123,7 @@ const RecipeForm = (props: Props) => {
                 <InputNumber
                     min={1}
                     placeholder='15'
-                    value={recipe?.cookTime}
+                    defaultValue={recipe?.cookTime}
                 />
             </Form.Item>
             <Form.Item
@@ -120,7 +134,7 @@ const RecipeForm = (props: Props) => {
                 <InputNumber
                     min={1}
                     placeholder='30'
-                    value={recipe?.totalTime}
+                    defaultValue={recipe?.totalTime}
                 />
             </Form.Item>
             <Form.Item
@@ -131,7 +145,7 @@ const RecipeForm = (props: Props) => {
                 <InputNumber
                     placeholder='4'
                     min={1}
-                    value={recipe?.servings}
+                    defaultValue={recipe?.servings}
                 />
             </Form.Item>
             <Form.Item
