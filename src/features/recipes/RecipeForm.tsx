@@ -1,5 +1,4 @@
 import { Button, Form, Input, InputNumber } from 'antd';
-import { Recipe } from '../../models/recipe';
 import { useAppSelector } from '../../app/hooks';
 import { selectRecipesById } from './recipesApiSlice';
 
@@ -19,7 +18,8 @@ export interface RecipeFormData {
 
 interface Props {
     handleSubmit: Function,
-    recipeId?: number
+    recipeId?: number,
+    isLoading: boolean
 }
 
 const RecipeForm = (props: Props) => {
@@ -143,10 +143,10 @@ const RecipeForm = (props: Props) => {
                 />
             </Form.Item>
             <div className='submit-button-container'>
-            <Button type="primary" htmlType="submit">
+            <Button type="primary" htmlType="submit" disabled={props.isLoading} >
                 Submit
             </Button>
-            <Button onClick={resetForm}>
+            <Button onClick={resetForm} disabled={props.isLoading} >
                 Reset Form
             </Button>
             </div>

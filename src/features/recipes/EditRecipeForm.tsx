@@ -77,7 +77,7 @@ const EditRecipeForm = (props: Props) => {
                 title="Edit Recipe"
                 style={{ width: '100%' }}
             >
-                <RecipeForm handleSubmit={handleSubmit} recipeId={props.recipeId} />
+                <RecipeForm handleSubmit={handleSubmit} recipeId={props.recipeId} isLoading={false} />
             </Card>
         </>
     );
