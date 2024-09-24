@@ -11,15 +11,13 @@ interface Props {
     setSelectedRecipe: React.Dispatch<React.SetStateAction<Recipe | undefined>>,
 }
 
+export const recipeTagsToString = (recipe: Recipe) => {
+    return join(', ', pluck('name', recipe.tags));
+}
+
 const RecipeDetails = (props: Props) => {
     const [edit, setEdit] = useState(false);
     const recipe = useAppSelector(state => selectRecipesById(state, props.recipeId));
-
-    // const recipe = props.recipe;
-
-    const parseTags = () => {
-        return join(', ', pluck('name', recipe.tags));
-    }
 
     const handleCancel = () => {
         props.setSelectedRecipe(undefined);
@@ -90,7 +88,7 @@ const RecipeDetails = (props: Props) => {
                         <Descriptions.Item label="Cook Time">{recipe.cookTime} minutes</Descriptions.Item>
                         <Descriptions.Item label="Total Time">{recipe.totalTime} minutes</Descriptions.Item>
                         <Descriptions.Item label="Servings">{recipe.servings}</Descriptions.Item>
-                        <Descriptions.Item label="Tags">{parseTags()}</Descriptions.Item>
+                        <Descriptions.Item label="Tags">{recipeTagsToString(recipe)}</Descriptions.Item>
                     </Descriptions>
                 </Card>
                 <Space>
