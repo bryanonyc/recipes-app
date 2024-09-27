@@ -19,7 +19,6 @@ const PersistLogin = () => {
         isUninitialized, // refresh has not been called yet
         isSuccess,
         isError,
-        error
     }] = useRefreshMutation();
 
     useEffect(() => {
@@ -27,7 +26,7 @@ const PersistLogin = () => {
             const verifyRefreshToken = async () => {
                 console.log('verifying refresh token')
                 try {
-                    const { accessToken, name, email } = await refresh(null).unwrap();
+                    const { accessToken } = await refresh(null).unwrap();
                     dispatch(setCredentials( { accessToken }));
                     setTrueSuccess(true);
                 }
@@ -51,10 +50,8 @@ const PersistLogin = () => {
 
     let content
     if (!persist) { // persist: no
-        console.log('no persist')
         content = <Outlet />
     } else if (isError) { //persist: yes, token: no
-        console.log('error')
         content = (
             <div className='login-container'>
                 <Result
@@ -73,10 +70,8 @@ const PersistLogin = () => {
             </div>
         )
     } else if (isSuccess && trueSuccess) { //persist: yes, token: yes
-        console.log('success')
         content = <Outlet />
     } else if (accessToken && isUninitialized) { //persist: yes, token: yes
-        console.log('token and uninit')
         content = <Outlet />
     }
 
