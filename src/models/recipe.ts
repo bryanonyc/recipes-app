@@ -1,5 +1,4 @@
 import type { RecipeRating } from "./recipe-rating";
-import type { Tag } from "./tag";
 import type { User } from "./user";
 
 export type Recipe = {
@@ -14,6 +13,6 @@ export type Recipe = {
     servings: number;
     author: User;
     authorId: number;
-    rating: RecipeRating[]
-    tags: Tag[]
+    rating: RecipeRating[];
+    tags: string;
   }
