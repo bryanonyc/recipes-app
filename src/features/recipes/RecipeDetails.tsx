@@ -10,7 +10,7 @@ const RecipeDetails = () => {
     const navigate = useNavigate();
 
     const recipe = useAppSelector(state => selectRecipesById(state, Number(id)));
-    console.log('recipe', recipe);
+
     const handleCancel = () => {
         navigate('/recipes');
     };
