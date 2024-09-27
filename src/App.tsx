@@ -9,6 +9,7 @@ import './App.css';
 import { Result } from 'antd';
 import AppLayout from './components/AppLayout';
 import { useTitle } from './hooks/useTitle';
+import NewRecipeForm from './features/recipes/NewRecipeForm';
 
 const App = () => {
   useTitle('Recipe Finder');
@@ -43,6 +44,14 @@ const App = () => {
                   element={
                     <AppLayout>
                       <RecipesHome />
+                    </AppLayout>
+                  }
+                />
+                <Route
+                  path="recipes/new"
+                  element={
+                    <AppLayout>
+                      <NewRecipeForm />
                     </AppLayout>
                   }
                 />
