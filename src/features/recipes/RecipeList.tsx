@@ -1,8 +1,5 @@
-import { useState }  from 'react';
 import { Alert, Empty, Row } from 'antd';
-import { Recipe } from '../../models/recipe';
 import { useGetRecipesQuery } from '../../features/recipes/recipesApiSlice';
-import RecipeDetails from './RecipeDetails';
 import RecipeCard from './RecipeCard';
 import { useAuth } from '../../hooks/useAuth';
 
@@ -11,7 +8,6 @@ interface Props {
 }
 
 const RecipeList = (props: Props) => {
-    const [selectedRecipe, setSelectedRecipe] = useState<Recipe | undefined>(undefined);
     const { email } = useAuth();
 
     // Uncomment below for polling
@@ -36,22 +32,23 @@ const RecipeList = (props: Props) => {
         } else {
             recipeIds = [...ids];
         }
-        const recipeCards = ids?.length
-            ? recipeIds.map(recipeId => <RecipeCard
-                key={recipeId}
-                recipeId={recipeId}
-                showDelete={props.filterByOwner}
-                setSelectedRecipe={setSelectedRecipe}
-            />)
-            : <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
+        const recipeCards = recipeIds.map(recipeId => <RecipeCard
+            key={recipeId}
+            recipeId={recipeId}
+            showDelete={props.filterByOwner}
+        />)
 
-        content = (
-            <>
-                <Row gutter={[25, 25]}>
-                    {recipeCards}
-                </Row>
-            </>
-        )
+        if (ids?.length) {
+            content = (
+                <>
+                    <Row gutter={[25, 25]}>
+                        {recipeCards}
+                    </Row>
+                </>
+            )
+        } else {
+            content = <Empty />
+        }
     }
 
     let errorContent
@@ -67,10 +64,6 @@ const RecipeList = (props: Props) => {
             }
             errorContent = <Alert message={`Error: ${error?.status}`} description={message} type='error'/>
         }
-    }
-
-    if (selectedRecipe) {
-        content = <RecipeDetails setSelectedRecipe={setSelectedRecipe} recipeId={selectedRecipe.id} />
     }
 
     return (

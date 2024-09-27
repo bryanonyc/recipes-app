@@ -10,6 +10,8 @@ import { Result } from 'antd';
 import AppLayout from './components/AppLayout';
 import { useTitle } from './hooks/useTitle';
 import NewRecipeForm from './features/recipes/NewRecipeForm';
+import EditRecipeForm from './features/recipes/EditRecipeForm';
+import RecipeDetails from './features/recipes/RecipeDetails';
 
 const App = () => {
   useTitle('Recipe Finder');
@@ -19,42 +21,44 @@ const App = () => {
       <BrowserRouter>
         <Routes>
           {/* Public routes */}
-          <Route
-            index
-            element={<Welcome />}
-          />
-          <Route
-            path="login"
-            element={<Login />}
-          />
-          <Route
-            path="register"
-            element={<Register />}
-          />
+          <Route index element={<Welcome />} />
+          <Route path="login" element={<Login />} />
+          <Route path="register" element={<Register />} />
 
           {/* Protected routes */}
-          <Route
-            element={<PersistLogin />}
-          >
-            <Route
-              element={<Prefetch />}
-            >
-                <Route
-                  path="recipes"
+          <Route element={<PersistLogin />}>
+            <Route element={<Prefetch />}>
+              <Route path='recipes'>
+                <Route index
                   element={
                     <AppLayout>
                       <RecipesHome />
                     </AppLayout>
                   }
                 />
-                <Route
-                  path="recipes/new"
+                <Route path="new"
                   element={
                     <AppLayout>
                       <NewRecipeForm />
                     </AppLayout>
                   }
                 />
+                <Route path=":id"
+                    element={
+                      <AppLayout>
+                        {/* <EditRecipeForm /> */}
+                        <RecipeDetails />
+                      </AppLayout>
+                    }
+                />
+                <Route path=":id/edit"
+                    element={
+                      <AppLayout>
+                        <EditRecipeForm />
+                      </AppLayout>
+                    }
+                />
+              </Route>
             </Route>
           </Route> {/* End Protected routes */}
 

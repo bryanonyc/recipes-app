@@ -1,45 +1,44 @@
 import { message, Card, Form } from 'antd';
-import { Tag } from '../../models/tag';
 import { useAddNewRecipeMutation } from './recipesApiSlice';
-import { isNil } from 'ramda';
 import { useAuth } from '../../hooks/useAuth';
 import RecipeForm, { RecipeFormData } from './RecipeForm';
+import { useNavigate } from 'react-router-dom';
 
 const NewRecipeForm = () => {
+    const navigate = useNavigate();
     const { email, name } = useAuth();
 
     const [form] = Form.useForm();
     const [antdMessage, antDMessageContent] = message.useMessage();
     const [addNewRecipe, { isLoading }] = useAddNewRecipeMutation();
 
-    const parseTags = (tags: string) => {
-        if (isNil(tags)) {
-            return [];
-        }
-        const requestedTags: Tag[] = [];
-        const raw = tags.split(",");
-        raw.map((tag) => {
-            if (tag !== "") {
-                requestedTags.push({ "name" : tag.trim() });
-            }
-        });
-        return requestedTags;
-    }
+    // const parseTags = (tags: string) => {
+    //     if (isNil(tags)) {
+    //         return '';
+    //     }
+    //     const requestedTags: string[] = [];
+    //     const raw = tags.split(",");
+    //     raw.map((tag) => {
+    //         if (tag !== "") {
+    //             requestedTags.push({ "name" : tag.trim() });
+    //         }
+    //     });
+    //     return requestedTags;
+    // }
 
     const resetForm = () => {
         form.resetFields();
     };
 
     const handleSubmit = async (values: RecipeFormData) => {
-        const { tags } = values;
-        const requestedTags = parseTags(tags);
+        // const { tags } = values;
+        // const requestedTags = parseTags(tags);
         const body = {
             ...values,
             author: {
                 email,
                 name,
-            },
-            tags: requestedTags
+            }
         };
 
         try {
@@ -47,9 +46,9 @@ const NewRecipeForm = () => {
             antdMessage.open({
                 type: 'success',
                 content: 'New recipe successfully submitted.',
-                duration: 5,
               });
               resetForm();
+              navigate('/recipes');
         } catch (err: any) {
             console.error('New recipe submission error', err);
             if (!err.status) {
@@ -69,7 +68,7 @@ const NewRecipeForm = () => {
                 title="Recipe Submission"
                 style={{ width: '100%' }}
             >
-                <RecipeForm handleSubmit={handleSubmit} isLoading={isLoading} />
+                <RecipeForm handleSubmit={handleSubmit} isLoading={isLoading} form={form} />
             </Card>
         </>
     );

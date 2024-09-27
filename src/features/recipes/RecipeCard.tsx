@@ -1,17 +1,17 @@
 import { message, Card, Col, Descriptions, Modal } from "antd"
 import { useGetRecipesQuery, useDeleteRecipeMutation } from "./recipesApiSlice"
-import { Recipe } from "../../models/recipe";
 import { DeleteOutlined } from '@ant-design/icons';
 import { useState } from 'react';
 import { memo } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 
 interface Props {
     recipeId: number,
     showDelete: boolean,
-    setSelectedRecipe: React.Dispatch<React.SetStateAction<Recipe | undefined>>,
 }
 
 const RecipeCard = (props: Props) => {
+    const navigate = useNavigate();
     const { recipe } = useGetRecipesQuery(undefined, {
         selectFromResult: ({ data }) => ({
             recipe: data?.entities[props.recipeId]
@@ -27,7 +27,7 @@ const RecipeCard = (props: Props) => {
         const target = evt as HTMLElement;
 
         if (target.nodeName !== 'svg') {
-            props.setSelectedRecipe(recipe);
+            navigate(`/recipes/${props.recipeId}`);
         }
     }
 

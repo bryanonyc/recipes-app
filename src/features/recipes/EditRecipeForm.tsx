@@ -1,73 +1,51 @@
 import { message, Card, Form } from 'antd';
-import { Tag } from '../../models/tag';
-import { selectRecipesById, useAddNewRecipeMutation } from './recipesApiSlice';
-import { isNil } from 'ramda';
+import { useUpdateRecipeMutation, useGetRecipesQuery } from './recipesApiSlice';
 import { useAuth } from '../../hooks/useAuth';
 import RecipeForm, { RecipeFormData } from './RecipeForm';
-import { Recipe } from '../../models/recipe';
-import { useAppSelector } from '../../app/hooks';
+import { useNavigate, useParams } from 'react-router-dom';
 
-interface Props {
-    recipeId: number
-}
-
-const EditRecipeForm = (props: Props) => {
-    const recipe = useAppSelector(state => selectRecipesById(state, props.recipeId));
+const EditRecipeForm = () => {
+    const { id } = useParams();
+    const navigate = useNavigate();
+    const { recipe } = useGetRecipesQuery(undefined, {
+        selectFromResult: ({ data }) => ({
+            recipe: data?.entities[Number(id)]
+        })
+    });
 
     const { email, name } = useAuth();
-
     const [form] = Form.useForm();
     const [antdMessage, antDMessageContent] = message.useMessage();
-    const [addNewRecipe] = useAddNewRecipeMutation();
-
-    const parseTags = (tags: string) => {
-        if (isNil(tags)) {
-            return [];
-        }
-        const requestedTags: Tag[] = [];
-        const raw = tags.split(",");
-        raw.map((tag) => {
-            if (tag !== "") {
-                requestedTags.push({ "name" : tag.trim() });
-            }
-        });
-        return requestedTags;
-    }
-
-    const resetForm = () => {
-        form.resetFields();
-    };
+    const [updateRecipe, { isLoading }] = useUpdateRecipeMutation();
 
     const handleSubmit = async (values: RecipeFormData) => {
-        // const { tags } = values;
-        // const requestedTags = parseTags(tags);
-        // const body = {
-        //     ...values,
-        //     author: {
-        //         email,
-        //         name,
-        //     },
-        //     tags: requestedTags
-        // };
+        const body = {
+            ...values,
+            id: Number(id),
+            author: {
+                email,
+                name,
+            }
+        };
 
-        // try {
-        //     await addNewRecipe(body).unwrap();
-        //     antdMessage.open({
-        //         type: 'success',
-        //         content: 'New recipe successfully submitted.',
-        //         duration: 5,
-        //       });
-        //       resetForm();
-        // } catch (err: any) {
-        //     console.error('New recipe submission error', err);
-        //     if (!err.status) {
-        //         console.log('no error status');
-        //     } else if (err.status === 401) {
-        //         console.log('error status');
-        //     } else {
-        //         console.log('error message', err.data?.message);
-        //     }
-        // }
+        try {
+            await updateRecipe(body).unwrap();
+            antdMessage.open({
+                type: 'success',
+                content: 'Recipe updated successfully.',
+                duration: 0,
+              });
+              navigate('/recipes');
+        } catch (err: any) {
+            console.error('Edit recipe submission error', err);
+            if (!err.status) {
+                console.log('no error status');
+            } else if (err.status === 401) {
+                console.log('error status');
+            } else {
+                console.log('error message', err.data?.message);
+            }
+        }
     };
 
     const content = (
@@ -77,7 +55,7 @@ const EditRecipeForm = (props: Props) => {
                 title="Edit Recipe"
                 style={{ width: '100%' }}
             >
-                <RecipeForm handleSubmit={handleSubmit} recipeId={props.recipeId} isLoading={false} />
+                <RecipeForm handleSubmit={handleSubmit} recipe={recipe} isLoading={isLoading} form={form} />
             </Card>
         </>
     );

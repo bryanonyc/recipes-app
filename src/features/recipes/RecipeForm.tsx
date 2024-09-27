@@ -1,7 +1,8 @@
-import { Button, Form, Input, InputNumber } from 'antd';
+import { Button, Form, FormInstance, Input, InputNumber } from 'antd';
 import { Recipe } from '../../models/recipe';
 import { useEffect } from 'react';
-import { recipeTagsToString } from './RecipeDetails';
+import { useNavigate } from 'react-router-dom';
+import { isNil } from 'ramda';
 
 const { TextArea } = Input;
 
@@ -20,15 +21,25 @@ export interface RecipeFormData {
 interface Props {
     handleSubmit: Function,
     recipe?: Recipe,
-    isLoading: boolean
+    isLoading: boolean,
+    form: FormInstance
 }
 
 const RecipeForm = (props: Props) => {
-    const [form] = Form.useForm();
+    const navigate = useNavigate();
     const recipe = props.recipe;
 
-    const resetForm = () => {
-        form.resetFields();
+    const gotoRecipes = () => {
+        navigate('/recipes');
+    }
+
+    const handleCancel = () => {
+        props.form.resetFields();
+        if (isNil(recipe)) {
+            gotoRecipes();
+        } else {
+            navigate(`/recipes/${recipe.id}`)
+        }
     };
 
     const handleSubmit = async (values: RecipeFormData) => {
@@ -36,7 +47,7 @@ const RecipeForm = (props: Props) => {
     };
 
     useEffect(() => {
-        form.setFieldsValue({
+        props.form.setFieldsValue({
             title: recipe?.title,
             description: recipe?.description,
             ingredients: recipe?.ingredients,
@@ -45,18 +56,13 @@ const RecipeForm = (props: Props) => {
             cookTime: recipe?.cookTime,
             totalTime: recipe?.totalTime,
             servings: recipe?.servings,
+            tags: recipe?.tags,
         });
-
-        if (recipe?.tags) {
-            form.setFieldsValue({
-                tags: recipeTagsToString(recipe)
-            });
-        }
-    }, [form, recipe]);
+    }, [props.form, recipe]);
 
     return (
         <Form
-            form={form}
+            form={props.form}
             labelCol={{ span: 5 }}
             wrapperCol={{ span: 19 }}
             autoComplete="off"
@@ -157,11 +163,11 @@ const RecipeForm = (props: Props) => {
                 />
             </Form.Item>
             <div className='submit-button-container'>
-            <Button type="primary" htmlType="submit" disabled={props.isLoading} >
+            <Button type="primary" htmlType="submit">
                 Submit
             </Button>
-            <Button onClick={resetForm} disabled={props.isLoading} >
-                Reset Form
+            <Button onClick={handleCancel}>
+                Cancel
             </Button>
             </div>
         </Form>
