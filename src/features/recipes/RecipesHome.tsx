@@ -1,8 +1,16 @@
-import { Tabs, TabsProps } from 'antd';
+import { useNavigate } from 'react-router-dom';
+import { Button, Tabs, TabsProps } from 'antd';
 import RecipeList from './RecipeList';
-import NewRecipeForm from '../../features/recipes/NewRecipeForm';
 
 const RecipesHome = () => {
+    const navigate = useNavigate();
+
+    const gotoNewRecipe = () => {
+        navigate('/recipes/new');
+    };
+
+    const newRecipeButton = <Button type='primary' onClick={gotoNewRecipe}>Submit New Recipe</Button>;
+
     const items: TabsProps['items'] = [
         {
           key: 'all',
@@ -14,15 +22,10 @@ const RecipesHome = () => {
           label: 'My Recipes',
           children: ( <RecipeList filterByOwner={true} />)
         },
-        {
-          key: 'new',
-          label: 'Submit New Recipe',
-          children: (<NewRecipeForm />)
-        },
       ];
 
     return (
-        <Tabs items={items} />
+        <Tabs tabBarExtraContent={newRecipeButton} items={items} />
     );
 };
 
