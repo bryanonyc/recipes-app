@@ -7,26 +7,16 @@ import { RegisterCredentials } from '../../models/reegisterCredentials';
 
 const Register = () => {
     const [antdMessage, antDMessageContent] = message.useMessage();
-
-    // const [name, setName] = useState('');
-    // const [email, setEmail] = useState('');
-    // const [password, setPassword] = useState('');
     const [errMsg, setErrMsg] = useState('');
 
     const navigate = useNavigate();
 
     const [register, { isLoading }] = useRegisterMutation();
 
-    // if (isLoading) {
-    //     return <p>Loading...</p>
-    // }
-
     const handleSubmit = async (values: RegisterCredentials) => {
         console.log(values);
         try {
             await register(values).unwrap();
-            // setEmail('');
-            // setPassword('');
             antdMessage.open({
                 type: 'success',
                 content: 'Registration was successful. Redirecting to Login page.',
