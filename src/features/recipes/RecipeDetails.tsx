@@ -1,15 +1,19 @@
-import { Button, Card, Descriptions, Result, Space } from 'antd';
+import { message, Button, Card, Descriptions, Result, Space } from 'antd';
 import { useAppSelector } from '../../app/hooks';
-import { selectRecipesById } from './recipesApiSlice';
+import { selectRecipesById, usePublishRecipeMutation } from './recipesApiSlice';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
 import { isNil } from 'ramda';
+
 const RecipeDetails = () => {
     const { id } = useParams();
-    const { email } = useAuth();
+    const { email, isAdmin } = useAuth();
     const navigate = useNavigate();
 
     const recipe = useAppSelector(state => selectRecipesById(state, Number(id)));
+
+    const [antdMessage, antDMessageContent] = message.useMessage();
+    const [publishRecipe] = usePublishRecipeMutation();
 
     const handleCancel = () => {
         navigate('/recipes');
@@ -17,6 +21,34 @@ const RecipeDetails = () => {
 
     const handleEdit = () => {
         navigate(`/recipes/${recipe.id}/edit`);
+    };
+
+    const handlePublish = async () => {
+        const body = {
+            id: Number(id),
+            author: {
+                email
+            }
+        };
+
+        try {
+            await publishRecipe(body).unwrap();
+            antdMessage.open({
+                type: 'success',
+                content: 'Recipe updated successfully.',
+                duration: 0,
+              });
+              navigate('/recipes');
+        } catch (err: any) {
+            console.error('Edit recipe submission error', err);
+            if (!err.status) {
+                console.log('no error status');
+            } else if (err.status === 401) {
+                console.log('error status');
+            } else {
+                console.log('error message', err.data?.message);
+            }
+        }
     };
 
     let content;
@@ -47,6 +79,11 @@ const RecipeDetails = () => {
                 </Descriptions>
             </Card>
             <Space>
+                { isAdmin && !recipe.isPublished &&
+                    <Button type="primary" onClick={handlePublish}>
+                        Publish
+                    </Button>
+                }
                 { email === recipe.author.email &&
                     <Button type="primary" onClick={handleEdit}>
                         Edit

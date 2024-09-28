@@ -4,7 +4,7 @@ import RecipeCard from './RecipeCard';
 import { useAuth } from '../../hooks/useAuth';
 
 interface Props {
-    filterByOwner: boolean;
+    tabKey: string;
 }
 
 const RecipeList = (props: Props) => {
@@ -24,21 +24,32 @@ const RecipeList = (props: Props) => {
 
     if (isSuccess) {
         const { ids, entities } = data;
-        let recipeIds;
-        if (props.filterByOwner) {
+
+        let recipeIds: number[] = [];
+
+        if (props.tabKey === 'owner') {
             recipeIds = ids.filter(recipeId =>
                 entities[recipeId].author.email === email
             );
-        } else {
-            recipeIds = [...ids];
+        } else if (props.tabKey === 'published') {
+            // recipeIds = [...ids];
+            recipeIds = ids.filter(recipeId =>
+                entities[recipeId].isPublished === true
+            );
+        } else if (props.tabKey === 'unpublished') {
+            // recipeIds = [...ids];
+            recipeIds = ids.filter(recipeId =>
+                entities[recipeId].isPublished === false
+            );
         }
+
         const recipeCards = recipeIds.map(recipeId => <RecipeCard
             key={recipeId}
             recipeId={recipeId}
-            showDelete={props.filterByOwner}
+            showDelete={props.tabKey === 'owner'}
         />)
 
-        if (ids?.length) {
+        if (recipeCards.length) {
             content = (
                 <>
                     <Row gutter={[25, 25]}>
