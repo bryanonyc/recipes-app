@@ -1,8 +1,8 @@
-import { message, Card, Form } from 'antd';
+import { message, Card, Form, Result } from 'antd';
 import { useUpdateRecipeMutation, useGetRecipesQuery } from './recipesApiSlice';
 import { useAuth } from '../../hooks/useAuth';
 import RecipeForm, { RecipeFormData } from './RecipeForm';
-import { useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 
 const EditRecipeForm = () => {
     const { id } = useParams();
@@ -48,17 +48,33 @@ const EditRecipeForm = () => {
         }
     };
 
-    const content = (
-        <>
-            { antDMessageContent }
-            <Card
-                title="Edit Recipe"
-                style={{ width: '100%' }}
-            >
-                <RecipeForm handleSubmit={handleSubmit} recipe={recipe} isLoading={isLoading} form={form} />
-            </Card>
-        </>
-    );
+    let content;
+    if (email === recipe?.author.email) {
+        content = (
+            <>
+                { antDMessageContent }
+                <Card
+                    title="Edit Recipe"
+                    style={{ width: '100%' }}
+                >
+                    <RecipeForm handleSubmit={handleSubmit} recipe={recipe} isLoading={isLoading} form={form} />
+                </Card>
+            </>
+        );
+    } else {
+        content = (
+
+                <Result
+                    status="403"
+                    title="403"
+                    subTitle="Sorry, you are not authorized to access this page."
+                    extra={
+                        <Link to="/recipes">Back</Link>
+                    }
+                />
+
+        )
+    }
 
     return (
         <div className='submit-new-container'>

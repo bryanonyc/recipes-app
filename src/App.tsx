@@ -23,7 +23,9 @@ const App = () => {
                 <Routes>
                     {/* Public routes */}
                     <Route index element={<Welcome />} />
+
                     <Route path="login" element={<Login />} />
+
                     <Route path="register" element={<Register />} />
 
                     {/* Protected routes */}
@@ -37,6 +39,7 @@ const App = () => {
                                       </AppLayout>
                                     }
                                 />
+
                                 <Route path="new"
                                     element={
                                       <AppLayout>
@@ -44,22 +47,25 @@ const App = () => {
                                       </AppLayout>
                                     }
                                 />
-                                <Route path=":id"
-                                    element={
-                                      <AppLayout>
-                                          <RecipeDetails />
-                                      </AppLayout>
-                                    }
-                                />
 
-                                <Route element={<RequireAuth />}>
-                                    <Route path=":id/edit"
+                                <Route path=":id">
+                                    <Route index
                                         element={
-                                          <AppLayout>
-                                              <EditRecipeForm />
-                                          </AppLayout>
-                                        }
+                                            <AppLayout>
+                                                <RecipeDetails />
+                                            </AppLayout>
+                                          }
                                     />
+
+                                    {/* <Route element={<RequireAuth />}> */}
+                                        <Route path="edit"
+                                            element={
+                                            <AppLayout>
+                                                <EditRecipeForm />
+                                            </AppLayout>
+                                            }
+                                        />
+                                    {/* </Route> */}
                                 </Route>
                             </Route>
                         </Route>
