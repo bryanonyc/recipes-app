@@ -12,74 +12,78 @@ import { useTitle } from './hooks/useTitle';
 import NewRecipeForm from './features/recipes/NewRecipeForm';
 import EditRecipeForm from './features/recipes/EditRecipeForm';
 import RecipeDetails from './features/recipes/RecipeDetails';
+import RequireAuth from './features/auth/RequireAuth';
 
 const App = () => {
-  useTitle('Recipe Finder');
+    useTitle('Recipe Finder');
 
-  return (
-    <div className='app-container'>
-      <BrowserRouter>
-        <Routes>
-          {/* Public routes */}
-          <Route index element={<Welcome />} />
-          <Route path="login" element={<Login />} />
-          <Route path="register" element={<Register />} />
+    return (
+        <div className='app-container'>
+            <BrowserRouter>
+                <Routes>
+                    {/* Public routes */}
+                    <Route index element={<Welcome />} />
+                    <Route path="login" element={<Login />} />
+                    <Route path="register" element={<Register />} />
 
-          {/* Protected routes */}
-          <Route element={<PersistLogin />}>
-            <Route element={<Prefetch />}>
-              <Route path='recipes'>
-                <Route index
-                  element={
-                    <AppLayout>
-                      <RecipesHome />
-                    </AppLayout>
-                  }
-                />
-                <Route path="new"
-                  element={
-                    <AppLayout>
-                      <NewRecipeForm />
-                    </AppLayout>
-                  }
-                />
-                <Route path=":id"
-                    element={
-                      <AppLayout>
-                        {/* <EditRecipeForm /> */}
-                        <RecipeDetails />
-                      </AppLayout>
-                    }
-                />
-                <Route path=":id/edit"
-                    element={
-                      <AppLayout>
-                        <EditRecipeForm />
-                      </AppLayout>
-                    }
-                />
-              </Route>
-            </Route>
-          </Route> {/* End Protected routes */}
+                    {/* Protected routes */}
+                    <Route element={<PersistLogin />}>
+                        <Route element={<Prefetch />}>
+                            <Route path='recipes'>
+                                <Route index
+                                    element={
+                                      <AppLayout>
+                                          <RecipesHome />
+                                      </AppLayout>
+                                    }
+                                />
+                                <Route path="new"
+                                    element={
+                                      <AppLayout>
+                                          <NewRecipeForm />
+                                      </AppLayout>
+                                    }
+                                />
+                                <Route path=":id"
+                                    element={
+                                      <AppLayout>
+                                          <RecipeDetails />
+                                      </AppLayout>
+                                    }
+                                />
 
-          <Route
-              path="*"
-              element={
-                <div className='login-container'>
-                    <Result
-                        status="404"
-                        title="404"
-                        subTitle="Sorry, the page you requested does not exist."
-                        extra={
-                          <Link to="/">Back Home</Link>
+                                <Route element={<RequireAuth />}>
+                                    <Route path=":id/edit"
+                                        element={
+                                          <AppLayout>
+                                              <EditRecipeForm />
+                                          </AppLayout>
+                                        }
+                                    />
+                                </Route>
+                            </Route>
+                        </Route>
+                    </Route>
+
+                    <Route
+                        path="*"
+                        element={
+                            <div className='login-container'>
+                                <Result
+                                    status="404"
+                                    title="404"
+                                    subTitle="Sorry, the page you requested does not exist."
+                                    extra={
+                                      <Link to="/">Back Home</Link>
+                                    }
+                                />
+                            </div>
                         }
                     />
-                </div>
-              }
-          />
-        </Routes>
-      </BrowserRouter>
-    </div>
-  );
+                </Routes>
+            </BrowserRouter>
+        </div>
+    )
 };
+
 export default App;
