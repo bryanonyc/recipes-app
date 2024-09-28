@@ -54,6 +54,16 @@ export const recipesApiSlice = apiSlice.injectEndpoints({
                 { type: 'Recipe' as const, id: 'LIST' }
             ]
         }),
+        publishRecipe: builder.mutation({
+            query: (patch) => ({
+                url: `/recipes/publish`,
+                method: 'PATCH',
+                body: { ...patch }
+            }),
+            invalidatesTags: (result, error, arg) => [
+                { type: 'Recipe' as const, id: arg.id }
+            ]
+        }),
         deleteRecipe: builder.mutation({
             query: ({ id }) => ({
                 url: `/recipes/${id}/delete`,
@@ -72,6 +82,7 @@ export const {
     useGetRecipesQuery,
     useAddNewRecipeMutation,
     useUpdateRecipeMutation,
+    usePublishRecipeMutation,
     useDeleteRecipeMutation,
 } = recipesApiSlice;
 
