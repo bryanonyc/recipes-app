@@ -25,7 +25,7 @@ const Login = () => {
 
     const handleSubmit = async (values: LoginCredentials) => {
         try {
-            const { accessToken, name, email } = await login(values).unwrap();
+            const { accessToken } = await login(values).unwrap();
             dispatch(setCredentials( { accessToken }));
             navigate("/recipes");
         } catch (err: any) {
