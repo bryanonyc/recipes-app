@@ -13,6 +13,7 @@ export type Recipe = {
     servings: number;
     author: User;
     authorId: number;
+    isPublished: boolean;
     rating: RecipeRating[];
     tags: string;
   }
