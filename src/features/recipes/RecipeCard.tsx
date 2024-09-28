@@ -1,9 +1,9 @@
-import { message, Card, Col, Descriptions, Modal } from "antd"
+import { message, Card, Col, Descriptions, Modal, Tooltip } from "antd"
 import { useGetRecipesQuery, useDeleteRecipeMutation } from "./recipesApiSlice"
-import { DeleteOutlined } from '@ant-design/icons';
+import { DeleteOutlined, InfoCircleOutlined } from '@ant-design/icons';
 import { useState } from 'react';
 import { memo } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 interface Props {
     recipeId: number,
@@ -23,21 +23,12 @@ const RecipeCard = (props: Props) => {
     const [deleteRecipe] = useDeleteRecipeMutation();
     const [antdMessage, antDMessageContent] = message.useMessage();
 
-    const handleOnCardClick = (evt: EventTarget) => {
-        const target = evt as HTMLElement;
-
-        if (target.nodeName !== 'svg') {
-            navigate(`/recipes/${props.recipeId}`);
-        }
+    const handleOnInfoClick = () => {
+        navigate(`/recipes/${props.recipeId}`);
     }
 
-    const handleOnDeleteClick = (evt: EventTarget) => {
-        const target = evt as HTMLElement;
-
-        if (target.nodeName === 'svg') {
-            console.log('delete');
-            setOpen(true);
-        }
+    const handleOnDeleteClick = () => {
+        setOpen(true);
     }
 
     const handleModalConfirm = async () => {
@@ -65,16 +56,23 @@ const RecipeCard = (props: Props) => {
         setOpen(false);
     };
 
+    const cardActions = [<InfoCircleOutlined key="info" onClick={handleOnInfoClick} />];
+
+    if (props.showDelete) {
+        cardActions.push(<DeleteOutlined key="delete" onClick={handleOnDeleteClick}/>);
+    }
+
     let content =
         <Col key={props.recipeId}>
+
             <Card
-                hoverable
-                extra={props.showDelete && (
-                    <DeleteOutlined onClick={(evt) => handleOnDeleteClick(evt.target)}/>
+                title={(
+                    <Tooltip title={recipe?.title}>
+                        {recipe?.title}
+                    </Tooltip>
                 )}
-                title={recipe?.title}
                 style={{ maxWidth: 250}}
-                onClick={(evt) => handleOnCardClick(evt.target)}
+                actions={cardActions}
             >
                 <Descriptions column={1}>
                     <Descriptions.Item label="Prep Time">{recipe?.prepTime} minutes</Descriptions.Item>
