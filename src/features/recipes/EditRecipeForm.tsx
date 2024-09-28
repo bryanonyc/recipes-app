@@ -1,4 +1,4 @@
-import { message, Card, Form, Result } from 'antd';
+import { App, Card, Form, Result } from 'antd';
 import { useUpdateRecipeMutation, useGetRecipesQuery } from './recipesApiSlice';
 import { useAuth } from '../../hooks/useAuth';
 import RecipeForm, { RecipeFormData } from './RecipeForm';
@@ -15,7 +15,7 @@ const EditRecipeForm = () => {
 
     const { email, name } = useAuth();
     const [form] = Form.useForm();
-    const [antdMessage, antDMessageContent] = message.useMessage();
+    const { message: antdMessage }= App.useApp();
     const [updateRecipe] = useUpdateRecipeMutation();
 
     const handleSubmit = async (values: RecipeFormData) => {
@@ -30,13 +30,10 @@ const EditRecipeForm = () => {
 
         try {
             await updateRecipe(body).unwrap();
-            antdMessage.open({
-                type: 'success',
-                content: 'Recipe updated successfully.',
-                duration: 0,
-              });
-              navigate('/recipes');
+            antdMessage.success('Recipe updated successfully.', 5);
+            navigate('/recipes');
         } catch (err: any) {
+            antdMessage.error('Edit recipe submission error.', 5);
             console.error('Edit recipe submission error', err);
             if (!err.status) {
                 console.log('no error status');
@@ -52,7 +49,6 @@ const EditRecipeForm = () => {
     if (email === recipe?.author.email) {
         content = (
             <>
-                { antDMessageContent }
                 <Card
                     title="Edit Recipe"
                     style={{ width: '100%' }}

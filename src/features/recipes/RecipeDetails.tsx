@@ -1,4 +1,4 @@
-import { message, Button, Card, Descriptions, Result, Space } from 'antd';
+import { App, Button, Card, Descriptions, Result, Space } from 'antd';
 import { useAppSelector } from '../../app/hooks';
 import { selectRecipesById, usePublishRecipeMutation } from './recipesApiSlice';
 import { Link, useNavigate, useParams } from 'react-router-dom';
@@ -12,7 +12,7 @@ const RecipeDetails = () => {
 
     const recipe = useAppSelector(state => selectRecipesById(state, Number(id)));
 
-    const [antdMessage, antDMessageContent] = message.useMessage();
+    const { message: antdMessage } = App.useApp();
     const [publishRecipe] = usePublishRecipeMutation();
 
     const handleCancel = () => {
@@ -33,14 +33,11 @@ const RecipeDetails = () => {
 
         try {
             await publishRecipe(body).unwrap();
-            antdMessage.open({
-                type: 'success',
-                content: 'Recipe updated successfully.',
-                duration: 0,
-              });
-              navigate('/recipes');
+            antdMessage.success('Recipe updated successfully.', 5);
+            navigate('/recipes');
         } catch (err: any) {
             console.error('Edit recipe submission error', err);
+            antdMessage.error('Edit recipe submission error', 5);
             if (!err.status) {
                 console.log('no error status');
             } else if (err.status === 401) {

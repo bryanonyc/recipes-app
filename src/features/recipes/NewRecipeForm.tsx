@@ -1,4 +1,4 @@
-import { message, Card, Form } from 'antd';
+import { App, Card, Form } from 'antd';
 import { useAddNewRecipeMutation } from './recipesApiSlice';
 import { useAuth } from '../../hooks/useAuth';
 import RecipeForm, { RecipeFormData } from './RecipeForm';
@@ -9,7 +9,7 @@ const NewRecipeForm = () => {
     const { email, name } = useAuth();
 
     const [form] = Form.useForm();
-    const [antdMessage, antDMessageContent] = message.useMessage();
+    const { message: antdMessage } = App.useApp();
     const [addNewRecipe] = useAddNewRecipeMutation();
 
     // const parseTags = (tags: string) => {
@@ -43,13 +43,11 @@ const NewRecipeForm = () => {
 
         try {
             await addNewRecipe(body).unwrap();
-            antdMessage.open({
-                type: 'success',
-                content: 'New recipe successfully submitted.',
-              });
-              resetForm();
-              navigate('/recipes');
+            antdMessage.success('Your recipe has been submitted. Once reviewed by an admin, it will appear in the Published Recipes tab.', 5);
+            resetForm();
+            navigate('/recipes');
         } catch (err: any) {
+            antdMessage.error('Something went wrong with yoyur request.', 5);
             console.error('New recipe submission error', err);
             if (!err.status) {
                 console.log('no error status');
@@ -63,7 +61,6 @@ const NewRecipeForm = () => {
 
     const content = (
         <>
-            { antDMessageContent }
             <Card
                 title="Recipe Submission"
                 style={{ width: '100%' }}

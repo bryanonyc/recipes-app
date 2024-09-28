@@ -1,32 +1,23 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useRegisterMutation } from './authApiSlice';
-import { message, Alert, Button, Form, Input } from 'antd';
+import { App, Alert, Button, Form, Input } from 'antd';
 import { RegisterCredentials } from '../../models/reegisterCredentials';
 
 
 const Register = () => {
-    const [antdMessage, antDMessageContent] = message.useMessage();
+    const { message: antdMessage } = App.useApp()
     const [errMsg, setErrMsg] = useState('');
 
     const navigate = useNavigate();
 
-    const [register, { isLoading }] = useRegisterMutation();
+    const [register] = useRegisterMutation();
 
     const handleSubmit = async (values: RegisterCredentials) => {
-        console.log(values);
         try {
             await register(values).unwrap();
-            antdMessage.open({
-                type: 'success',
-                content: 'Registration was successful. Redirecting to Login page.',
-                duration: 0,
-              });
-
-            setTimeout(() => {
-                antdMessage.destroy();
-                navigate("/login");
-              }, 2000);
+            antdMessage.success('Registration was successful.', 5);
+            gotoLogin();
         } catch (err: any) {
             console.error('registration error', err);
             if (!err.status) {
@@ -45,7 +36,6 @@ const Register = () => {
 
     const content = (
         <>
-            {antDMessageContent}
             {
                 errMsg &&
                 <div className='auth-error'>

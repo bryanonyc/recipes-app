@@ -1,4 +1,4 @@
-import { message, Card, Col, Descriptions, Modal, Tooltip } from "antd"
+import { App, Card, Col, Descriptions, Modal, Tooltip } from "antd"
 import { useGetRecipesQuery, useDeleteRecipeMutation } from "./recipesApiSlice"
 import { DeleteOutlined, InfoCircleOutlined } from '@ant-design/icons';
 import { useState } from 'react';
@@ -21,7 +21,7 @@ const RecipeCard = (props: Props) => {
     const [open, setOpen] = useState(false);
 
     const [deleteRecipe] = useDeleteRecipeMutation();
-    const [antdMessage, antDMessageContent] = message.useMessage();
+    const { message: antdMessage }= App.useApp();
 
     const handleOnInfoClick = () => {
         navigate(`/recipes/${props.recipeId}`);
@@ -34,14 +34,11 @@ const RecipeCard = (props: Props) => {
     const handleModalConfirm = async () => {
         try {
             await deleteRecipe({ id: recipe?.id }).unwrap();
-            antdMessage.open({
-                type: 'success',
-                content: 'Recipe deleted successfully.',
-                duration: 5,
-            });
+            antdMessage.success('Recipe deleted successfully.', 5);
             setOpen(false);
         } catch (err: any) {
             console.error('Delete recipe error', err);
+            antdMessage.error('Delete recipe error.', 5);
             if (!err.status) {
                 console.log('no error status');
             } else if (err.status === 401) {
@@ -93,7 +90,6 @@ const RecipeCard = (props: Props) => {
         >
             <p>Would you like to delete this recipe?</p>
         </Modal>
-        { antDMessageContent }
         { content }
         </>
     )
