@@ -21,7 +21,6 @@ export interface RecipeFormData {
 interface Props {
     handleSubmit: Function,
     recipe?: Recipe,
-    isLoading: boolean,
     form: FormInstance
 }
 
@@ -163,12 +162,12 @@ const RecipeForm = (props: Props) => {
                 />
             </Form.Item>
             <div className='submit-button-container'>
-            <Button type="primary" htmlType="submit">
-                Submit
-            </Button>
-            <Button onClick={handleCancel}>
-                Cancel
-            </Button>
+                <Button type="primary" htmlType="submit">
+                    Submit
+                </Button>
+                <Button onClick={handleCancel}>
+                    Cancel
+                </Button>
             </div>
         </Form>
   )

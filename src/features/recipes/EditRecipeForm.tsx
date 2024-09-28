@@ -16,7 +16,7 @@ const EditRecipeForm = () => {
     const { email, name } = useAuth();
     const [form] = Form.useForm();
     const [antdMessage, antDMessageContent] = message.useMessage();
-    const [updateRecipe, { isLoading }] = useUpdateRecipeMutation();
+    const [updateRecipe] = useUpdateRecipeMutation();
 
     const handleSubmit = async (values: RecipeFormData) => {
         const body = {
@@ -57,7 +57,7 @@ const EditRecipeForm = () => {
                     title="Edit Recipe"
                     style={{ width: '100%' }}
                 >
-                    <RecipeForm handleSubmit={handleSubmit} recipe={recipe} isLoading={isLoading} form={form} />
+                    <RecipeForm handleSubmit={handleSubmit} recipe={recipe} form={form} />
                 </Card>
             </>
         );

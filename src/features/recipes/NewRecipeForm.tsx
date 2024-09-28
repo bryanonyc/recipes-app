@@ -10,7 +10,7 @@ const NewRecipeForm = () => {
 
     const [form] = Form.useForm();
     const [antdMessage, antDMessageContent] = message.useMessage();
-    const [addNewRecipe, { isLoading }] = useAddNewRecipeMutation();
+    const [addNewRecipe] = useAddNewRecipeMutation();
 
     // const parseTags = (tags: string) => {
     //     if (isNil(tags)) {
@@ -68,7 +68,7 @@ const NewRecipeForm = () => {
                 title="Recipe Submission"
                 style={{ width: '100%' }}
             >
-                <RecipeForm handleSubmit={handleSubmit} isLoading={isLoading} form={form} />
+                <RecipeForm handleSubmit={handleSubmit} form={form} />
             </Card>
         </>
     );
