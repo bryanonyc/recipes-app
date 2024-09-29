@@ -6,6 +6,8 @@ import { useAuth } from '../../hooks/useAuth';
 import { isNil } from 'ramda';
 import { FORBIDDEN_403, NOT_FOUND_404 } from '../../components/Results';
 
+const { Meta } = Card;
+
 const RecipeDetails = () => {
     const { id } = useParams();
     const { email, isAdmin } = useAuth();
@@ -50,6 +52,7 @@ const RecipeDetails = () => {
     };
 
     const isAuthor = email === recipe.author.email;
+    const authorDisplayName =  recipe.author.email.substring(0, recipe.author.email.indexOf('@'));
 
     let content;
 
@@ -59,9 +62,12 @@ const RecipeDetails = () => {
         content = <FORBIDDEN_403 extra={<Link to="/recipes">Back</Link>} />
     } else {
         content = (<>
-            <Card
-                title={recipe.title}
-            >
+            <Card>
+                <Meta
+                    title={recipe.title}
+                    description={`Submitted by: ${authorDisplayName}`}
+                    style={{ paddingBottom: '1rem'}}
+                />
                 <Descriptions column={1} bordered>
                     <Descriptions.Item label="Description">{recipe.description}</Descriptions.Item>
                     <Descriptions.Item label="Ingriedients">{recipe.ingredients}</Descriptions.Item>
