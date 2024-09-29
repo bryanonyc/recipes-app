@@ -4,7 +4,7 @@ import { selectRecipesById, usePublishRecipeMutation } from './recipesApiSlice';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
 import { isNil } from 'ramda';
-import { Forbidden, NotFound } from '../../components/Results';
+import { FORBIDDEN_403, NOT_FOUND_404 } from '../../components/Results';
 
 const RecipeDetails = () => {
     const { id } = useParams();
@@ -54,9 +54,9 @@ const RecipeDetails = () => {
     let content;
 
     if (isNil(recipe)) {
-        content = <NotFound extra={<Link to="/recipes">Back</Link>} />
+        content = <NOT_FOUND_404 extra={<Link to="/recipes">Back</Link>} />
     } else if (!recipe.isPublished && !isAdmin && !isAuthor) {
-        content = <Forbidden extra={<Link to="/recipes">Back</Link>} />
+        content = <FORBIDDEN_403 extra={<Link to="/recipes">Back</Link>} />
     } else {
         content = (<>
             <Card

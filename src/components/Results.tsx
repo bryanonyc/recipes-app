@@ -5,7 +5,7 @@ interface Props {
     extra: ReactNode;
 }
 
-export const Forbidden = (props: Props) => {
+export const FORBIDDEN_403 = (props: Props) => {
     return (
         <Result
             status="403"
@@ -16,7 +16,7 @@ export const Forbidden = (props: Props) => {
     )
 }
 
-export const NotFound = (props: Props) => {
+export const NOT_FOUND_404 = (props: Props) => {
     return (
         <Result
             status="404"

@@ -11,7 +11,7 @@ import { useTitle } from './hooks/useTitle';
 import NewRecipeForm from './features/recipes/NewRecipeForm';
 import EditRecipeForm from './features/recipes/EditRecipeForm';
 import RecipeDetails from './features/recipes/RecipeDetails';
-import { NotFound } from './components/Results';
+import { NOT_FOUND_404 } from './components/Results';
 
 const App = () => {
     useTitle('Recipe Finder');
@@ -74,7 +74,7 @@ const App = () => {
                         path="*"
                         element={
                             <div className='login-container'>
-                                <NotFound extra={<Link to="/">Back Home</Link>} />
+                                <NOT_FOUND_404 extra={<Link to="/">Back Home</Link>} />
                             </div>
                         }
                     />

@@ -3,7 +3,7 @@ import { useUpdateRecipeMutation, useGetRecipesQuery } from './recipesApiSlice';
 import { useAuth } from '../../hooks/useAuth';
 import RecipeForm, { RecipeFormData } from './RecipeForm';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import { Forbidden } from '../../components/Results';
+import { FORBIDDEN_403 } from '../../components/Results';
 
 const EditRecipeForm = () => {
     const { id } = useParams();
@@ -59,7 +59,7 @@ const EditRecipeForm = () => {
             </>
         );
     } else {
-        content = <Forbidden extra={<Link to="/recipes">Back</Link>} />
+        content = <FORBIDDEN_403 extra={<Link to="/recipes">Back</Link>} />
     }
 
     return (

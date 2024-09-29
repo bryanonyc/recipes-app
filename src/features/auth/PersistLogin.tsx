@@ -6,7 +6,7 @@ import { useAppDispatch, useAppSelector } from '../../app/hooks'
 import { selectCurrentToken } from './authSlice'
 import { setCredentials } from '../../features/auth/authSlice';
 import { Button } from 'antd'
-import { Forbidden } from '../../components/Results'
+import { FORBIDDEN_403 } from '../../components/Results'
 
 const PersistLogin = () => {
     const [persist] = usePersist();
@@ -56,7 +56,7 @@ const PersistLogin = () => {
     } else if (isError) { //persist: yes, token: no
         content = (
             <div className='login-container'>
-                <Forbidden
+                <FORBIDDEN_403
                     extra={
                         <Button
                             type="primary"

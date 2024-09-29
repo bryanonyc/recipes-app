@@ -3,7 +3,7 @@ import { useAuth } from '../../hooks/useAuth';
 import { useGetRecipesQuery } from '../recipes/recipesApiSlice';
 import AppLayout from '../../components/AppLayout';
 import { useEffect, useRef } from 'react';
-import { Forbidden } from '../../components/Results';
+import { FORBIDDEN_403 } from '../../components/Results';
 
 
 const RequireAuth = () => {
@@ -30,7 +30,7 @@ const RequireAuth = () => {
         } else {
             content = (
                 <AppLayout>
-                    <Forbidden extra={<Link to="/recipes">Back</Link>} />
+                    <FORBIDDEN_403 extra={<Link to="/recipes">Back</Link>} />
                 </AppLayout>
             )
         }
