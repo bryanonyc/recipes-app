@@ -1,5 +1,5 @@
 
-import { Layout, Space } from 'antd';
+import { Layout } from 'antd';
 import { ReactNode } from 'react';
 import { UserDropdown } from './UserDropdown';
 
