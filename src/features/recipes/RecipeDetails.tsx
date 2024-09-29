@@ -3,7 +3,7 @@ import { useAppSelector } from '../../app/hooks';
 import { selectRecipesById, usePublishRecipeMutation } from './recipesApiSlice';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
-import { isNil } from 'ramda';
+import { isNil, isNotNil } from 'ramda';
 import { FORBIDDEN_403, NOT_FOUND_404 } from '../../components/Results';
 
 const { Meta } = Card;
@@ -51,8 +51,8 @@ const RecipeDetails = () => {
         }
     };
 
-    const isAuthor = email === recipe.author.email;
-    const authorDisplayName =  recipe.author.email.substring(0, recipe.author.email.indexOf('@'));
+    const isAuthor = isNotNil(recipe.author) ? email === recipe.author.email : false;
+    const authorDisplayName =  isNotNil(recipe.author) ? recipe.author?.email.substring(0, recipe.author?.email.indexOf('@')) : 'Unknown';
 
     let content;
 
