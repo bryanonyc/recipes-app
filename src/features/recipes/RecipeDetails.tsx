@@ -4,7 +4,7 @@ import { selectRecipesById, usePublishRecipeMutation } from './recipesApiSlice';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
 import { isNil } from 'ramda';
-import { NotFound } from '../../components/Results';
+import { Forbidden, NotFound } from '../../components/Results';
 
 const RecipeDetails = () => {
     const { id } = useParams();
@@ -49,10 +49,14 @@ const RecipeDetails = () => {
         }
     };
 
+    const isAuthor = email === recipe.author.email;
+
     let content;
 
     if (isNil(recipe)) {
         content = <NotFound extra={<Link to="/recipes">Back</Link>} />
+    } else if (!recipe.isPublished && !isAdmin && !isAuthor) {
+        content = <Forbidden extra={<Link to="/recipes">Back</Link>} />
     } else {
         content = (<>
             <Card
@@ -75,7 +79,7 @@ const RecipeDetails = () => {
                         Publish
                     </Button>
                 }
-                { email === recipe.author.email &&
+                { isAuthor &&
                     <Button type="primary" onClick={handleEdit}>
                         Edit
                     </Button>
