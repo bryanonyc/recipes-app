@@ -8,7 +8,7 @@ interface Props {
 }
 
 const RecipeList = (props: Props) => {
-    const { email } = useAuth();
+    const { email, isAdmin } = useAuth();
 
     // Uncomment below for polling
     // const { data, isSuccess, error } = useGetRecipesQuery(undefined, {
@@ -26,6 +26,12 @@ const RecipeList = (props: Props) => {
         const { ids, entities } = data;
 
         let recipeIds: number[] = [];
+
+        let showDelete = false;
+
+        if ((props.tabKey === 'owner') || (props.tabKey === 'unpublished' && isAdmin)) {
+            showDelete = true;
+        }
 
         if (props.tabKey === 'owner') {
             recipeIds = ids.filter(recipeId =>
@@ -46,7 +52,7 @@ const RecipeList = (props: Props) => {
         const recipeCards = recipeIds.map(recipeId => <RecipeCard
             key={recipeId}
             recipeId={recipeId}
-            showDelete={props.tabKey === 'owner'}
+            showDelete={showDelete}
         />)
 
         if (recipeCards.length) {
