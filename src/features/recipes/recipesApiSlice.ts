@@ -44,24 +44,24 @@ export const recipesApiSlice = apiSlice.injectEndpoints({
         }),
         updateRecipe: builder.mutation({
             query: (patch) => ({
-                url: `/recipes`,
+                url: '/recipes',
                 method: 'PATCH',
                 body: {
                     ...patch
                 }
             }),
-            invalidatesTags: [
-                { type: 'Recipe' as const, id: 'LIST' }
+            invalidatesTags: (result, error, arg) => [
+                { type: 'Recipe' as const, id: arg.id }
             ]
         }),
         publishRecipe: builder.mutation({
             query: (patch) => ({
-                url: `/recipes/publish`,
+                url: '/recipes/publish',
                 method: 'PATCH',
                 body: { ...patch }
             }),
             invalidatesTags: (result, error, arg) => [
-                { type: 'Recipe' as const, id: arg.id }
+                { type: 'Recipe' as const, id: 'LIST' }
             ]
         }),
         deleteRecipe: builder.mutation({
