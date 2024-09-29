@@ -87,7 +87,7 @@ export const {
 } = recipesApiSlice;
 
 // returns the query result object
-export const selectRecipesResult = recipesApiSlice
+const selectRecipesResult = recipesApiSlice
     .endpoints
     .getRecipes
     .select();
