@@ -4,6 +4,7 @@ import { useAuth } from '../../hooks/useAuth';
 import RecipeForm, { RecipeFormData } from './RecipeForm';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { FORBIDDEN_403 } from '../../components/Results';
+import { getErrorMessage } from '../../components/Errors';
 
 const EditRecipeForm = () => {
     const { id } = useParams();
@@ -34,15 +35,7 @@ const EditRecipeForm = () => {
             antdMessage.success('Recipe updated successfully.', 5);
             navigate('/recipes');
         } catch (err: any) {
-            antdMessage.error('Edit recipe submission error.', 5);
-            console.error('Edit recipe submission error', err);
-            if (!err.status) {
-                console.log('no error status');
-            } else if (err.status === 401) {
-                console.log('error status');
-            } else {
-                console.log('error message', err.data?.message);
-            }
+            antdMessage.error(getErrorMessage(err), 10);
         }
     };
 

@@ -4,6 +4,7 @@ import { DeleteOutlined, InfoCircleOutlined } from '@ant-design/icons';
 import { useState } from 'react';
 import { memo } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { getErrorMessage } from '../../components/Errors';
 
 interface Props {
     recipeId: number,
@@ -37,15 +38,7 @@ const RecipeCard = (props: Props) => {
             antdMessage.success('Recipe deleted successfully.', 5);
             setOpen(false);
         } catch (err: any) {
-            console.error('Delete recipe error', err);
-            antdMessage.error('Delete recipe error.', 5);
-            if (!err.status) {
-                console.log('no error status');
-            } else if (err.status === 401) {
-                console.log('error status');
-            } else {
-                console.log('error message', err.data?.message);
-            }
+            antdMessage.error(getErrorMessage(err), 10);
         }
     };
 

@@ -3,6 +3,7 @@ import { useAddNewRecipeMutation } from './recipesApiSlice';
 import { useAuth } from '../../hooks/useAuth';
 import RecipeForm, { RecipeFormData } from './RecipeForm';
 import { useNavigate } from 'react-router-dom';
+import { getErrorMessage } from '../../components/Errors';
 
 const NewRecipeForm = () => {
     const navigate = useNavigate();
@@ -47,15 +48,7 @@ const NewRecipeForm = () => {
             resetForm();
             navigate('/recipes');
         } catch (err: any) {
-            antdMessage.error('Something went wrong with yoyur request.', 5);
-            console.error('New recipe submission error', err);
-            if (!err.status) {
-                console.log('no error status');
-            } else if (err.status === 401) {
-                console.log('error status');
-            } else {
-                console.log('error message', err.data?.message);
-            }
+            antdMessage.error(getErrorMessage(err), 10);
         }
     };
 

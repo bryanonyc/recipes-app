@@ -5,6 +5,7 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
 import { isNil, isNotNil } from 'ramda';
 import { FORBIDDEN_403, NOT_FOUND_404 } from '../../components/Results';
+import { getErrorMessage } from '../../components/Errors';
 
 const { Meta } = Card;
 
@@ -39,15 +40,7 @@ const RecipeDetails = () => {
             antdMessage.success('Recipe updated successfully.', 5);
             navigate('/recipes');
         } catch (err: any) {
-            console.error('Edit recipe submission error', err);
-            antdMessage.error('Edit recipe submission error', 5);
-            if (!err.status) {
-                console.log('no error status');
-            } else if (err.status === 401) {
-                console.log('error status');
-            } else {
-                console.log('error message', err.data?.message);
-            }
+            antdMessage.error(getErrorMessage(err), 10);
         }
     };
 
