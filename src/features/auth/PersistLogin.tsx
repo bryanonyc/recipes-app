@@ -49,7 +49,8 @@ const PersistLogin = () => {
     }, []);
 
 
-    let content
+    let content;
+
     if (!persist) { // persist: no
         content = <Outlet />
     } else if (isError) { //persist: yes, token: no
