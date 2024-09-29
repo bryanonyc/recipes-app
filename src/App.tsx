@@ -6,13 +6,12 @@ import Register from './features/auth/Register';
 import Prefetch from './features/auth/Prefetch';
 import PersistLogin from './features/auth/PersistLogin';
 import './App.css';
-import { Result } from 'antd';
 import AppLayout from './components/AppLayout';
 import { useTitle } from './hooks/useTitle';
 import NewRecipeForm from './features/recipes/NewRecipeForm';
 import EditRecipeForm from './features/recipes/EditRecipeForm';
 import RecipeDetails from './features/recipes/RecipeDetails';
-import RequireAuth from './features/auth/RequireAuth';
+import { NotFound } from './components/Results';
 
 const App = () => {
     useTitle('Recipe Finder');
@@ -75,14 +74,7 @@ const App = () => {
                         path="*"
                         element={
                             <div className='login-container'>
-                                <Result
-                                    status="404"
-                                    title="404"
-                                    subTitle="Sorry, the page you requested does not exist."
-                                    extra={
-                                      <Link to="/">Back Home</Link>
-                                    }
-                                />
+                                <NotFound extra={<Link to="/">Back Home</Link>} />
                             </div>
                         }
                     />

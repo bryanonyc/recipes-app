@@ -1,8 +1,9 @@
-import { App, Card, Form, Result } from 'antd';
+import { App, Card, Form } from 'antd';
 import { useUpdateRecipeMutation, useGetRecipesQuery } from './recipesApiSlice';
 import { useAuth } from '../../hooks/useAuth';
 import RecipeForm, { RecipeFormData } from './RecipeForm';
 import { Link, useNavigate, useParams } from 'react-router-dom';
+import { Forbidden } from '../../components/Results';
 
 const EditRecipeForm = () => {
     const { id } = useParams();
@@ -58,18 +59,7 @@ const EditRecipeForm = () => {
             </>
         );
     } else {
-        content = (
-
-                <Result
-                    status="403"
-                    title="403"
-                    subTitle="Sorry, you are not authorized to access this page."
-                    extra={
-                        <Link to="/recipes">Back</Link>
-                    }
-                />
-
-        )
+        content = <Forbidden extra={<Link to="/recipes">Back</Link>} />
     }
 
     return (

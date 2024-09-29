@@ -1,9 +1,9 @@
 import { Link, Outlet, useParams } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
 import { useGetRecipesQuery } from '../recipes/recipesApiSlice';
-import { Result } from 'antd';
 import AppLayout from '../../components/AppLayout';
 import { useEffect, useRef } from 'react';
+import { Forbidden } from '../../components/Results';
 
 
 const RequireAuth = () => {
@@ -30,14 +30,7 @@ const RequireAuth = () => {
         } else {
             content = (
                 <AppLayout>
-                    <Result
-                        status="403"
-                        title="403"
-                        subTitle="Sorry, you are not authorized to access this page."
-                        extra={
-                            <Link to="/recipes">Back</Link>
-                        }
-                    />
+                    <Forbidden extra={<Link to="/recipes">Back</Link>} />
                 </AppLayout>
             )
         }

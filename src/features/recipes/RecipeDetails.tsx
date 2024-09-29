@@ -1,9 +1,10 @@
-import { App, Button, Card, Descriptions, Result, Space } from 'antd';
+import { App, Button, Card, Descriptions, Space } from 'antd';
 import { useAppSelector } from '../../app/hooks';
 import { selectRecipesById, usePublishRecipeMutation } from './recipesApiSlice';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
 import { isNil } from 'ramda';
+import { NotFound } from '../../components/Results';
 
 const RecipeDetails = () => {
     const { id } = useParams();
@@ -51,14 +52,7 @@ const RecipeDetails = () => {
     let content;
 
     if (isNil(recipe)) {
-        content = <Result
-            status="404"
-            title="404"
-            subTitle="Sorry, the page you requested does not exist."
-            extra={
-                <Link to="/recipes">Back</Link>
-            }
-        />
+        content = <NotFound extra={<Link to="/recipes">Back</Link>} />
     } else {
         content = (<>
             <Card

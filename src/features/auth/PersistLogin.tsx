@@ -5,7 +5,8 @@ import { usePersist } from '../../hooks/usePersist'
 import { useAppDispatch, useAppSelector } from '../../app/hooks'
 import { selectCurrentToken } from './authSlice'
 import { setCredentials } from '../../features/auth/authSlice';
-import { Button, Result } from 'antd'
+import { Button } from 'antd'
+import { Forbidden } from '../../components/Results'
 
 const PersistLogin = () => {
     const [persist] = usePersist();
@@ -54,10 +55,7 @@ const PersistLogin = () => {
     } else if (isError) { //persist: yes, token: no
         content = (
             <div className='login-container'>
-                <Result
-                    status="403"
-                    title="403"
-                    subTitle="Sorry, you are not authorized to access this page."
+                <Forbidden
                     extra={
                         <Button
                             type="primary"
