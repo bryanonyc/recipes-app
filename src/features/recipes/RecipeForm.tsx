@@ -74,7 +74,6 @@ const RecipeForm = (props: Props) => {
             >
                 <Input
                     placeholder='Amazing Burgers!'
-                    defaultValue={recipe?.title}
                 />
             </Form.Item>
             <Form.Item
@@ -84,7 +83,6 @@ const RecipeForm = (props: Props) => {
                 <TextArea
                     rows={4}
                     placeholder='The juciest burgers in the world'
-                    defaultValue={recipe?.description}
                 />
             </Form.Item>
             <Form.Item
@@ -95,7 +93,6 @@ const RecipeForm = (props: Props) => {
                 <TextArea
                     rows={4}
                     placeholder='1 pound ground beef'
-                    defaultValue={recipe?.ingredients}
                 />
             </Form.Item>
             <Form.Item
@@ -106,7 +103,6 @@ const RecipeForm = (props: Props) => {
                 <TextArea
                     rows={4}
                     placeholder='Heat up the grill...'
-                    defaultValue={recipe?.directions}
                 />
             </Form.Item>
             <Form.Item
@@ -117,7 +113,6 @@ const RecipeForm = (props: Props) => {
                 <InputNumber
                     min={1}
                     placeholder='15'
-                    defaultValue={recipe?.prepTime}
                 />
             </Form.Item>
             <Form.Item
@@ -128,7 +123,6 @@ const RecipeForm = (props: Props) => {
                 <InputNumber
                     min={1}
                     placeholder='15'
-                    defaultValue={recipe?.cookTime}
                 />
             </Form.Item>
             <Form.Item
@@ -139,7 +133,6 @@ const RecipeForm = (props: Props) => {
                 <InputNumber
                     min={1}
                     placeholder='30'
-                    defaultValue={recipe?.totalTime}
                 />
             </Form.Item>
             <Form.Item
@@ -150,7 +143,6 @@ const RecipeForm = (props: Props) => {
                 <InputNumber
                     placeholder='4'
                     min={1}
-                    defaultValue={recipe?.servings}
                 />
             </Form.Item>
             <Form.Item
