@@ -22,7 +22,6 @@ const authSlice = createSlice({
             state.token = accessToken;
         },
         logOut: (state) => {
-            console.log('logOut called.  Setting token to null');
             state.token = null;
         }
     }

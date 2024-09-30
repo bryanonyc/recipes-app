@@ -19,12 +19,10 @@ const LogoutButton = () => {
 
     useEffect(() => {
         if (isSuccess) {
-            console.log('Logout success');
             dispatch(logOut());
             dispatch(apiSlice.util.resetApiState());
             navigate('/');
         } else if (error) {
-            console.log('Logout Error:', error);
             let errorMessage = 'Logout Error';
             // if ('status' in error) {
             //     errorMessage += ` : ${error.message}`;
