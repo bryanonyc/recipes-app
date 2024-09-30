@@ -1,7 +1,6 @@
 import { useNavigate, useParams } from 'react-router-dom';
 import { useGetUsersQuery, useUpdateUserMutation } from './usersApiSlice';
 import { App, Button, Card, Checkbox, Form } from 'antd';
-import { useEffect } from 'react';
 import { isNotNil } from 'ramda';
 import { getErrorMessage } from '../../components/Errors';
 
