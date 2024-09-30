@@ -4,6 +4,7 @@ import { useAuth } from '../hooks/useAuth';
 
 import type { MenuProps } from 'antd';
 import LogoutButton from '../features/auth/LogoutButton';
+import { Link } from 'react-router-dom';
 
 
 export const UserDropdown = () => {
@@ -12,7 +13,7 @@ export const UserDropdown = () => {
     const adminItems: MenuProps['items'] = [
         {
             key: 'manageUsers',
-            label: 'Manage Users',
+            label: <Link to='/users'>Manage Users</Link>,
         },
         {
             type: 'divider',

@@ -12,6 +12,9 @@ import NewRecipeForm from './features/recipes/NewRecipeForm';
 import EditRecipeForm from './features/recipes/EditRecipeForm';
 import RecipeDetails from './features/recipes/RecipeDetails';
 import { NOT_FOUND_404 } from './components/Results';
+import UsersHome from './features/users/UsersHome';
+import RequireAuth from './features/auth/RequireAuth';
+import EditUserForm from './features/users/EditUserForm';
 
 const App = () => {
     useTitle('Recipe Finder');
@@ -65,6 +68,26 @@ const App = () => {
                                             }
                                         />
                                     {/* </Route> */}
+                                </Route>
+                            </Route>
+
+                            <Route element={<RequireAuth />}>
+                                <Route path="users">
+                                    <Route
+                                        index
+                                        element={
+                                            <AppLayout>
+                                                <UsersHome />
+                                            </AppLayout>
+                                        }
+                                    />
+                                    <Route path=":id/edit"
+                                        element={
+                                            <AppLayout>
+                                                <EditUserForm />
+                                            </AppLayout>
+                                        }
+                                    />
                                 </Route>
                             </Route>
                         </Route>
