@@ -6,6 +6,11 @@ import { App as AntdApp } from "antd"
 import reportWebVitals from './reportWebVitals';
 import { Provider } from 'react-redux';
 import { store } from './app/store';
+import { disableReactDevTools } from '@fvilers/disable-react-devtools';
+
+if (process.env.NODE_ENV === 'production' || process.env.REACT_APP_NODE_ENV === 'production') {
+    disableReactDevTools();
+}
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
