@@ -13,12 +13,13 @@ const doFetch = async (
             },
             ...(jsonBody && { body: JSON.stringify(jsonBody) })
         }
-        console.log(options);
+
         const response = await fetch(endpoint, options);
         const result = await response.json();
+
         return result;
       } catch (e) {
-        console.log(e);
+        console.error(e);
     }
 }
 
