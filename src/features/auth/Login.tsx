@@ -15,9 +15,9 @@ const Login = () => {
 
     const [login] = useLoginMutation();
 
-    const [persist, setPersist] = usePersist();
+    // const [persist, setPersist] = usePersist();
 
-    const handleToggle = () => setPersist((prev: boolean) => !prev);
+    // const handleToggle = () => setPersist((prev: boolean) => !prev);
 
     const gotoRegister = () => {
         navigate("/register");
@@ -73,12 +73,12 @@ const Login = () => {
                         <Input.Password />
                 </Form.Item>
 
-                <Checkbox
+                {/* <Checkbox
                     onChange={handleToggle}
                     checked={persist}
                 >
                     Trust This Device
-                </Checkbox>
+                </Checkbox> */}
 
                 <Button type="primary" htmlType="submit">
                     Login
