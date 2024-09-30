@@ -25,7 +25,7 @@ const PersistLogin = () => {
     useEffect(() => {
         if (effectRan.current === true || process.env.NODE_ENV !== 'development') { // React 18 Strict Mode
             const verifyRefreshToken = async () => {
-                console.log('verifying refresh token')
+                // console.log('verifying refresh token')
                 try {
                     const { accessToken } = await refresh(null).unwrap();
                     dispatch(setCredentials( { accessToken }));
