@@ -1,9 +1,12 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import type { RootState } from '../store';
 import { AuthResponse, setCredentials } from '../../features/auth/authSlice';
+import { isNotNil } from 'ramda';
+
+const BASE_URL = isNotNil(process.env.API_ENDPOINT_BASE_URL) ? process.env.API_ENDPOINT_BASE_URL : process.env.REACT_APP_API_ENDPOINT_BASE_URL;
 
 const baseQuery = fetchBaseQuery({
-    baseUrl: process.env.REACT_APP_API_ENDPOINT_BASE_URL,
+    baseUrl: BASE_URL,
     credentials: 'include',
     prepareHeaders: (headers, { getState }) => {
         const token = (getState() as RootState).auth.token;
