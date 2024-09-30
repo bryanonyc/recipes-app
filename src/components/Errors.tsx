@@ -1,10 +1,10 @@
 export const getErrorMessage = (err: any) => {
     let errorMessage = '';
 
-    if (err.status) {
-        errorMessage = `${err.status}: ${err.error}`
-    } else if (err.data) {
-        errorMessage = `${err.data.message}`
+    if (err.status && err.data) {
+        errorMessage = `${err.status}: ${err.data.message}`
+    } else if (err.status) {
+        errorMessage =  errorMessage = `${err.status}: ${err.error}`
     } else {
         errorMessage = 'An unknown error occured.'
     }
