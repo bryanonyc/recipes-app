@@ -3,9 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '../../app/hooks';
 import { setCredentials } from '../../features/auth/authSlice';
 import { useLoginMutation } from '../../features/auth/authApiSlice';
-import { Alert, Button, Checkbox, Form, Input } from 'antd';
+import { Alert, Button, Form, Input } from 'antd';
 import { LoginCredentials } from '../../models/loginCredentials';
-import { usePersist } from '../../hooks/usePersist';
+import { getErrorMessage } from '../../components/Errors';
 
 const Login = () => {
     const [errMsg, setErrMsg] = useState('');
@@ -30,13 +30,8 @@ const Login = () => {
             navigate("/recipes");
         } catch (err: any) {
             console.error(err);
-            if (!err.status) {
-                setErrMsg('No Server Response');
-            } else if (err.status === 401) {
-                setErrMsg('Unauthorized');
-            } else {
-                setErrMsg(err.data?.message);
-            }
+            const errorMsg = getErrorMessage(err);
+            setErrMsg(errorMsg);
         }
     }
 

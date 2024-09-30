@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useRegisterMutation } from './authApiSlice';
 import { App, Alert, Button, Form, Input } from 'antd';
 import { RegisterCredentials } from '../../models/reegisterCredentials';
-
+import { getErrorMessage } from '../../components/Errors';
 
 const Register = () => {
     const { message: antdMessage } = App.useApp()
@@ -19,14 +19,9 @@ const Register = () => {
             antdMessage.success('Registration was successful.', 5);
             gotoLogin();
         } catch (err: any) {
-            console.error('registration error', err);
-            if (!err.status) {
-                setErrMsg('No Server Response');
-            } else if (err.status === 401) {
-                setErrMsg('Unauthorized');
-            } else {
-                setErrMsg(err.data?.message);
-            }
+            console.error(err);
+            const errorMsg = getErrorMessage(err);
+            setErrMsg(errorMsg);
         }
     }
 
