@@ -26,3 +26,14 @@ export const NOT_FOUND_404 = (props: Props) => {
         />
     )
 }
+
+export const ENVIRONMENT_NOT_SETUP_WARNING = (props: Props) => {
+    return (
+        <Result
+            status="warning"
+            title="Missing Environment Variable"
+            subTitle="A required environment variable is missing.  Please set either API_ENDPOINT_BASE_URL or REACT_APP_API_ENDPOINT_BASE_URL"
+            extra={props.extra}
+        />
+    )
+}

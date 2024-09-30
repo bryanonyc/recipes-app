@@ -15,6 +15,7 @@ import { NOT_FOUND_404 } from './components/Results';
 import UsersHome from './features/users/UsersHome';
 import RequireAuth from './features/auth/RequireAuth';
 import EditUserForm from './features/users/EditUserForm';
+import RequireEnv from './components/RequireEnv';
 
 const App = () => {
     useTitle('Recipe Finder');
@@ -26,9 +27,10 @@ const App = () => {
                     {/* Public routes */}
                     <Route index element={<Welcome />} />
 
-                    <Route path="login" element={<Login />} />
-
-                    <Route path="register" element={<Register />} />
+                    <Route element={<RequireEnv />}>
+                        <Route path="login" element={<Login />} />
+                        <Route path="register" element={<Register />} />
+                    </Route>
 
                     {/* Protected routes */}
                     <Route element={<PersistLogin />}>
