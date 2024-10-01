@@ -188,6 +188,10 @@ body {
   max-width: 200px;
 }
 
+.app-layout {
+  min-height: 100vh;
+}
+
 .app-layout-header {
   position: sticky;
   top: 0px;

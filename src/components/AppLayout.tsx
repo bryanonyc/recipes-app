@@ -17,20 +17,22 @@ const AppLayout = (props: Props) => {
     };
 
     return (
-        <Layout>
-            <Header className='app-layout-header'>
-                <Button type='primary' onClick={gotoNewRecipe}>Submit New Recipe</Button>
-                <UserDropdown />
-            </Header>
-            <Content>
-            <div className='app-layout-content-container'>
-                { props.children }
-            </div>
-            </Content>
-            <Footer className='app-layout-footer'>
-                Bryan Ogden ©{new Date().getFullYear()}
-            </Footer>
-        </Layout>
+        <div className='app-layout-container'>
+            <Layout className='app-layout'>
+                <Header className='app-layout-header'>
+                    <Button type='primary' onClick={gotoNewRecipe}>Submit New Recipe</Button>
+                    <UserDropdown />
+                </Header>
+                <Content>
+                <div className='app-layout-content-container'>
+                    { props.children }
+                </div>
+                </Content>
+                <Footer className='app-layout-footer'>
+                    Bryan Ogden ©{new Date().getFullYear()}
+                </Footer>
+            </Layout>
+        </div>
     );
 }
 
