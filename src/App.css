@@ -217,3 +217,13 @@ body {
   text-align: center;
   background: linear-gradient(45deg, black, white);
 }
+
+.owner-card {
+  border: 1px solid rgb(0, 200, 0);
+  max-width: 250px;
+}
+
+.card {
+  border: 1px solid;
+  max-width: 250px;
+}

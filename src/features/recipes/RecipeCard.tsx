@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { memo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getErrorMessage } from '../../components/Errors';
+import { useAuth } from '../../hooks/useAuth';
 
 interface Props {
     recipeId: number,
@@ -13,6 +14,7 @@ interface Props {
 
 const RecipeCard = (props: Props) => {
     const navigate = useNavigate();
+    const { email } = useAuth();
     const { recipe } = useGetRecipesQuery({}, {
         selectFromResult: ({ data }) => ({
             recipe: data?.entities[props.recipeId]
@@ -54,14 +56,13 @@ const RecipeCard = (props: Props) => {
 
     let content =
         <Col key={props.recipeId}>
-
             <Card
                 title={(
                     <Tooltip title={recipe?.title}>
                         {recipe?.title}
                     </Tooltip>
                 )}
-                style={{ maxWidth: 250}}
+                className={recipe?.author.email === email ? 'owner-card' : 'card'}
                 actions={cardActions}
             >
                 <Descriptions column={1}>
