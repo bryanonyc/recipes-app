@@ -1,45 +1,33 @@
 
-import { Layout } from 'antd';
+import { Button, Layout } from 'antd';
 import { ReactNode } from 'react';
 import { UserDropdown } from './UserDropdown';
+import { useNavigate } from 'react-router-dom';
 
 const { Header, Content, Footer } = Layout;
-
 interface Props {
     children: ReactNode;
 }
 
 const AppLayout = (props: Props) => {
+    const navigate = useNavigate();
+
+    const gotoNewRecipe = () => {
+        navigate('/recipes/new');
+    };
+
     return (
         <Layout>
-            <Header
-                style={{
-                    position: 'sticky',
-                    zIndex: 1,
-                    width: '100%',
-                    display: 'inline-block',
-                    background: '#f5f5f5'
-                }}
-            >
-                <div className='app-title'>
-                    <h1>Recipe Finder</h1>
-                </div>
-                <div className='user-menu'>
-                    <UserDropdown />
-                </div>
+            <Header className='app-layout-header'>
+                <Button type='primary' onClick={gotoNewRecipe}>Submit New Recipe</Button>
+                <UserDropdown />
             </Header>
-            <Content style={{ padding: '0 50px' }}>
-            <div
-                style={{
-                padding: 24,
-                background: '#ccc',
-                borderRadius: 0
-                }}
-            >
+            <Content>
+            <div className='app-layout-content-container'>
                 { props.children }
             </div>
             </Content>
-            <Footer style={{ textAlign: 'center' }}>
+            <Footer className='app-layout-footer'>
                 Bryan Ogden ©{new Date().getFullYear()}
             </Footer>
         </Layout>

@@ -183,3 +183,29 @@ body {
   margin-bottom: 0;
   font-weight: 500;
 }
+
+.search-input {
+  max-width: 200px;
+}
+
+.app-layout-header {
+  position: sticky;
+  top: 0px;
+  z-index: 1;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: linear-gradient(45deg, black, white);
+}
+
+.app-layout-content-container {
+  padding: .5rem 3rem;
+  background: '#ccc';
+  border-radius: 0;
+}
+
+.app-layout-footer {
+  text-align: center;
+  background: linear-gradient(45deg, black, white);
+}
