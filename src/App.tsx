@@ -21,91 +21,90 @@ const App = () => {
     useTitle('Recipe Finder');
 
     return (
-        <div className='app-container'>
-            <BrowserRouter>
-                <Routes>
-                    {/* Public routes */}
-                    <Route index element={<Welcome />} />
+        <BrowserRouter>
+            <Routes>
+                {/* Public routes */}
+                <Route index element={<Welcome />} />
 
-                    <Route element={<RequireEnv />}>
-                        <Route path="login" element={<Login />} />
-                        <Route path="register" element={<Register />} />
-                    </Route>
+                <Route element={<RequireEnv />}>
+                    <Route path="login" element={<Login />} />
+                    <Route path="register" element={<Register />} />
+                </Route>
 
-                    {/* Protected routes */}
-                    <Route element={<PersistLogin />}>
-                        <Route element={<Prefetch />}>
-                            <Route path='recipes'>
+                {/* Protected routes */}
+                <Route element={<PersistLogin />}>
+                    <Route element={<Prefetch />}>
+                        <Route path='recipes'>
+                            <Route index
+                                element={
+                                    <AppLayout>
+                                        <RecipesHome />
+                                    </AppLayout>
+                                }
+                            />
+
+                            <Route path="new"
+                                element={
+                                    <AppLayout>
+                                        <NewRecipeForm />
+                                    </AppLayout>
+                                }
+                            />
+
+                            <Route path=":id">
                                 <Route index
                                     element={
-                                      <AppLayout>
-                                          <RecipesHome />
-                                      </AppLayout>
-                                    }
+                                        <AppLayout>
+                                            <RecipeDetails />
+                                        </AppLayout>
+                                        }
                                 />
 
-                                <Route path="new"
-                                    element={
-                                      <AppLayout>
-                                          <NewRecipeForm />
-                                      </AppLayout>
-                                    }
-                                />
-
-                                <Route path=":id">
-                                    <Route index
+                                {/* <Route element={<RequireAuth />}> */}
+                                    <Route path="edit"
                                         element={
-                                            <AppLayout>
-                                                <RecipeDetails />
-                                            </AppLayout>
-                                          }
+                                        <AppLayout>
+                                            <EditRecipeForm />
+                                        </AppLayout>
+                                        }
                                     />
-
-                                    {/* <Route element={<RequireAuth />}> */}
-                                        <Route path="edit"
-                                            element={
-                                            <AppLayout>
-                                                <EditRecipeForm />
-                                            </AppLayout>
-                                            }
-                                        />
-                                    {/* </Route> */}
-                                </Route>
+                                {/* </Route> */}
                             </Route>
+                        </Route>
 
-                            <Route element={<RequireAuth />}>
-                                <Route path="users">
-                                    <Route
-                                        index
-                                        element={
-                                            <AppLayout>
-                                                <UsersHome />
-                                            </AppLayout>
-                                        }
-                                    />
-                                    <Route path=":id/edit"
-                                        element={
-                                            <AppLayout>
-                                                <EditUserForm />
-                                            </AppLayout>
-                                        }
-                                    />
-                                </Route>
+                        <Route element={<RequireAuth />}>
+                            <Route path="users">
+                                <Route
+                                    index
+                                    element={
+                                        <AppLayout>
+                                            <UsersHome />
+                                        </AppLayout>
+                                    }
+                                />
+                                <Route path=":id/edit"
+                                    element={
+                                        <AppLayout>
+                                            <EditUserForm />
+                                        </AppLayout>
+                                    }
+                                />
                             </Route>
                         </Route>
                     </Route>
+                </Route>
 
-                    <Route
-                        path="*"
-                        element={
-                            <div className='login-container'>
-                                <NOT_FOUND_404 extra={<Link to="/">Back Home</Link>} />
-                            </div>
-                        }
-                    />
-                </Routes>
-            </BrowserRouter>
-        </div>
+                <Route
+                    path="*"
+                    element={
+                        <div className='login-container'>
+                            <NOT_FOUND_404 extra={<Link to="/">Back Home</Link>} />
+                        </div>
+                    }
+                />
+            </Routes>
+        </BrowserRouter>
+
     )
 };
 
