@@ -29,7 +29,7 @@ const RecipeList = (props: Props) => {
 
         if (props.tabKey === 'owner') {
             recipeIds = ids.filter(recipeId =>
-                entities[recipeId].author.email === email
+                entities[recipeId].author?.email === email
             );
         } else if (props.tabKey === 'published') {
             // recipeIds = [...ids];
