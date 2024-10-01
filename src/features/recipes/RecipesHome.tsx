@@ -3,7 +3,7 @@ import RecipeList from './RecipeList';
 import { useAuth } from '../../hooks/useAuth';
 import { useMemo, useState } from 'react';
 import { isNil, isNotEmpty, isNotNil } from 'ramda';
-import { createSearchParams, useNavigate, useSearchParams } from 'react-router-dom';
+import { createSearchParams, useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 import { useGetRecipesQuery } from './recipesApiSlice';
 import StickyBox from 'react-sticky-box';
 
@@ -14,6 +14,9 @@ interface StringMap {
 }
 
 const RecipesHome = () => {
+    const location = useLocation();
+    const activeKey = location.hash.substring(1); // remove the leading #
+    console.log('activeKey', activeKey);
     const { isAdmin } = useAuth();
     const [searchText, setSearchText] = useState('');
     const navigate = useNavigate();
@@ -47,14 +50,13 @@ const RecipesHome = () => {
     );
 
     // Uncomment below for polling
-    // const { data, isSuccess, error } = useGetRecipesQuery(undefined, {
-    //     pollingInterval: 15000,
+    // const { data, isSuccess, error } = useGetRecipesQuery(buildQueryString, {
+    //     pollingInterval: 5000,
     //     refetchOnFocus: true,
     //     refetchOnMountOrArgChange: true
     // });
 
     // Comment below for polling
-
     const { data, isSuccess, error } = useGetRecipesQuery(buildQueryString);
 
     const doSearch = async () => {
@@ -95,16 +97,6 @@ const RecipesHome = () => {
         }
       ];
 
-    if (isAdmin) {
-      items.push(
-        {
-          key: 'unpublished',
-          label: 'Unpublished Recipes',
-          children: ( <RecipeList tabKey='unpublished' data={data} isSuccess={isSuccess} error={error} />)
-        }
-      )
-    }
-
     const renderTabBar: TabsProps['renderTabBar'] = (props, DefaultTabBar) => (
         <StickyBox offsetTop={64} offsetBottom={20} style={{ zIndex: 1 }}>
             <DefaultTabBar {...props} style={{ background: '#f5f5f5' }} />
@@ -113,9 +105,11 @@ const RecipesHome = () => {
 
     return (
         <Tabs
+          defaultActiveKey={activeKey}
           tabBarExtraContent={extraContent}
           items={items}
           renderTabBar={renderTabBar}
+          onTabClick={(key) => { window.location.hash = key; }}
         />
     );
 };

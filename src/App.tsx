@@ -16,6 +16,7 @@ import UsersHome from './features/users/UsersHome';
 import RequireAuth from './features/auth/RequireAuth';
 import EditUserForm from './features/users/EditUserForm';
 import RequireEnv from './components/RequireEnv';
+import UnpublishedHome from './features/recipes/UnpublishedHome';
 
 const App = () => {
     useTitle('Recipe Finder');
@@ -90,6 +91,13 @@ const App = () => {
                                     }
                                 />
                             </Route>
+                            <Route path="unpublished"
+                                element={
+                                    <AppLayout>
+                                        <UnpublishedHome />
+                                    </AppLayout>
+                                }
+                            />
                         </Route>
                     </Route>
                 </Route>

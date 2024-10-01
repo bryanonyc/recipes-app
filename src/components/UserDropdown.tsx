@@ -12,6 +12,10 @@ export const UserDropdown = () => {
 
     const adminItems: MenuProps['items'] = [
         {
+            key: 'viewUnpublished',
+            label: <Link to='/unpublished'>Review Unpublished Recipes</Link>,
+        },
+        {
             key: 'manageUsers',
             label: <Link to='/users'>Manage Users</Link>,
         },
