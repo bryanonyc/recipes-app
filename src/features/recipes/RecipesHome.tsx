@@ -1,6 +1,5 @@
 import { Input, Tabs, TabsProps } from 'antd';
 import RecipeList from './RecipeList';
-import { useAuth } from '../../hooks/useAuth';
 import { useMemo, useState } from 'react';
 import { isNil, isNotEmpty, isNotNil } from 'ramda';
 import { createSearchParams, useLocation, useNavigate, useSearchParams } from 'react-router-dom';
@@ -13,11 +12,16 @@ interface StringMap {
     [key: string]: string;
 }
 
+let pollInterval = process.env.POLLING_INTERVAL ? Number(process.env.POLLING_INTERVA) : Number(process.env.REACT_APP_POLLING_INTERVAL);
+
 const RecipesHome = () => {
+    if (isNaN(pollInterval)) {
+      pollInterval = 0;
+    }
+
     const location = useLocation();
     const activeKey = location.hash.substring(1); // remove the leading #
-    console.log('activeKey', activeKey);
-    const { isAdmin } = useAuth();
+
     const [searchText, setSearchText] = useState('');
     const navigate = useNavigate();
     const [urlSearchParams] = useSearchParams();
@@ -50,14 +54,14 @@ const RecipesHome = () => {
     );
 
     // Uncomment below for polling
-    // const { data, isSuccess, error } = useGetRecipesQuery(buildQueryString, {
-    //     pollingInterval: 5000,
-    //     refetchOnFocus: true,
-    //     refetchOnMountOrArgChange: true
-    // });
+    const { data, isSuccess, error } = useGetRecipesQuery(buildQueryString, {
+        pollingInterval: pollInterval,
+        refetchOnFocus: true,
+        refetchOnMountOrArgChange: true
+    });
 
     // Comment below for polling
-    const { data, isSuccess, error } = useGetRecipesQuery(buildQueryString);
+    // const { data, isSuccess, error } = useGetRecipesQuery(buildQueryString);
 
     const doSearch = async () => {
         const queryObject = {
