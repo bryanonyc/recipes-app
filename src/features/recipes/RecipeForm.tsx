@@ -35,7 +35,7 @@ const RecipeForm = (props: Props) => {
     const handleCancel = () => {
         props.form.resetFields();
         if (isNil(recipe)) {
-            gotoRecipes();
+            navigate(-1);
         } else {
             navigate(`/recipes/${recipe.id}`)
         }

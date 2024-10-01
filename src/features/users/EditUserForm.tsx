@@ -42,7 +42,7 @@ const EditUserForm = () => {
 
     const handleCancel = () => {
         form.resetFields();
-        navigate(`/users/`)
+        navigate(-1);
     };
 
     return (

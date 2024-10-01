@@ -20,7 +20,7 @@ const RecipeDetails = () => {
     const [publishRecipe] = usePublishRecipeMutation();
 
     const handleCancel = () => {
-        navigate('/recipes');
+        navigate(-1);
     };
 
     const handleEdit = () => {
