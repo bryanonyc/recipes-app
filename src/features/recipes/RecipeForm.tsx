@@ -28,10 +28,6 @@ const RecipeForm = (props: Props) => {
     const navigate = useNavigate();
     const recipe = props.recipe;
 
-    const gotoRecipes = () => {
-        navigate('/recipes');
-    }
-
     const handleCancel = () => {
         props.form.resetFields();
         if (isNil(recipe)) {
