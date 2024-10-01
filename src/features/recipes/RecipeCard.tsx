@@ -50,7 +50,7 @@ const RecipeCard = (props: Props) => {
 
     const cardActions = [<InfoCircleOutlined key="info" onClick={handleOnInfoClick} />];
 
-    if (props.showDelete) {
+    if (props.showDelete || recipe?.author.email === email) {
         cardActions.push(<DeleteOutlined key="delete" onClick={handleOnDeleteClick}/>);
     }
 
