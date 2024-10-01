@@ -13,7 +13,7 @@ interface Props {
 
 const RecipeCard = (props: Props) => {
     const navigate = useNavigate();
-    const { recipe } = useGetRecipesQuery(undefined, {
+    const { recipe } = useGetRecipesQuery({}, {
         selectFromResult: ({ data }) => ({
             recipe: data?.entities[props.recipeId]
         })

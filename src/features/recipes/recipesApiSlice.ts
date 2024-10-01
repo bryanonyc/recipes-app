@@ -1,16 +1,26 @@
 import { createSelector, createEntityAdapter, EntityState } from "@reduxjs/toolkit";
 import { apiSlice } from "../../app/api/apiSlice";
 import type { Recipe } from "../../models/recipe";
+import { isEmpty } from 'ramda';
 
 const recipesAdapter = createEntityAdapter<Recipe>();
 
 const initialState = recipesAdapter.getInitialState();
 
+const getRecipesUrl = (searchText: {}) => {
+    if (isEmpty(searchText)) {
+        return '/recipes'
+    } else {
+        const queryParam = new URLSearchParams(searchText);
+        return `/recipes/?${queryParam}`
+    }
+}
+
 export const recipesApiSlice = apiSlice.injectEndpoints({
     endpoints: builder => ({
-        getRecipes: builder.query<EntityState<Recipe, number>, void>({
-            query: () => ({
-                url: '/recipes',
+        getRecipes: builder.query<EntityState<Recipe, number>, {}>({
+            query: (queryParams) => ({
+                url: getRecipesUrl(queryParams),
                 validateStatus: (response:any, result:any) => {
                     return response.status === 200 && !result.isError;
                 },
@@ -90,7 +100,7 @@ export const {
 const selectRecipesResult = recipesApiSlice
     .endpoints
     .getRecipes
-    .select();
+    .select({});
 
 // creates memozed selectr
 const selectRecipesData = createSelector(

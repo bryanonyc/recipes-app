@@ -8,7 +8,7 @@ const Prefetch = () => {
     useEffect(() => {
         store
             .dispatch(
-                recipesApiSlice.util.prefetch('getRecipes', undefined, { force: true })
+                recipesApiSlice.util.prefetch('getRecipes', {}, { force: true })
             );
 
         store

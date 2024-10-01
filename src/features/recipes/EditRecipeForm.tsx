@@ -9,7 +9,7 @@ import { getErrorMessage } from '../../components/Errors';
 const EditRecipeForm = () => {
     const { id } = useParams();
     const navigate = useNavigate();
-    const { recipe } = useGetRecipesQuery(undefined, {
+    const { recipe } = useGetRecipesQuery({}, {
         selectFromResult: ({ data }) => ({
             recipe: data?.entities[Number(id)]
         })
