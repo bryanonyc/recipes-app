@@ -37,7 +37,7 @@ const RecipeForm = (props: Props) => {
         if (isNil(recipe)) {
             navigate(-1);
         } else {
-            navigate(`/recipes/${recipe.id}`)
+            navigate(`/recipes/#owner`)
         }
     };
 
