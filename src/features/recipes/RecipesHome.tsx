@@ -1,29 +1,97 @@
-import { useNavigate } from 'react-router-dom';
-import { Button, Tabs, TabsProps } from 'antd';
+import { Input, Tabs, TabsProps } from 'antd';
 import RecipeList from './RecipeList';
 import { useAuth } from '../../hooks/useAuth';
+import { useMemo, useState } from 'react';
+import { isNil, isNotEmpty, isNotNil } from 'ramda';
+import { createSearchParams, useNavigate, useSearchParams } from 'react-router-dom';
+import { useGetRecipesQuery } from './recipesApiSlice';
+
+const { Search } = Input;
+
+interface StringMap {
+    [key: string]: string;
+}
 
 const RecipesHome = () => {
+    const { isAdmin } = useAuth();
+    const [searchText, setSearchText] = useState('');
     const navigate = useNavigate();
+    const [urlSearchParams] = useSearchParams();
 
-    const gotoNewRecipe = () => {
-        navigate('/recipes/new');
+    const buildQueryParamMap = (searchParams: URLSearchParams) => {
+        const params: StringMap = {};
+        searchParams.forEach((value, key) => {
+            if (isNotEmpty(value) && isNotNil(value)) {
+                params[key] = value;
+            }
+        });
+        return params;
+    }
+
+    const buildQueryParams = (paramMap: StringMap) => {
+        if (isNil(paramMap['search'])) {
+            return {};
+        }
+
+        return {
+            search: paramMap['search']
+        }
+    }
+
+    const queryParamMap = buildQueryParamMap(urlSearchParams);
+
+    const buildQueryString = useMemo(
+        () => buildQueryParams(queryParamMap),
+        [queryParamMap]
+    );
+
+    // Uncomment below for polling
+    // const { data, isSuccess, error } = useGetRecipesQuery(undefined, {
+    //     pollingInterval: 15000,
+    //     refetchOnFocus: true,
+    //     refetchOnMountOrArgChange: true
+    // });
+
+    // Comment below for polling
+
+    const { data, isSuccess, error } = useGetRecipesQuery(buildQueryString);
+
+    const doSearch = async () => {
+        const queryObject = {
+            pathname: '/recipes',
+            search: createSearchParams({}).toString()
+        };
+
+        if (isNotEmpty(searchText) && isNotNil(searchText)) {
+            queryObject.search = createSearchParams({ search: searchText }).toString()
+        }
+
+        navigate(queryObject);
     };
 
-    const { isAdmin } = useAuth();
+    const initialSearchTerm = isNotNil(urlSearchParams.get('search')) ? urlSearchParams.get('search') : '';
 
-    const newRecipeButton = <Button type='primary' onClick={gotoNewRecipe}>Submit New Recipe</Button>;
+    const extraContent = (
+        <Search
+            placeholder="Search recipes"
+            className='search-input'
+            onChange={(e) => setSearchText(e.target.value)}
+            onSearch={doSearch}
+            defaultValue={initialSearchTerm!}
+            enterButton
+        />
+    )
 
     const items: TabsProps['items'] = [
         {
           key: 'published',
           label: 'Published Recipes',
-          children: ( <RecipeList tabKey='published' />)
+          children: ( <RecipeList tabKey='published' data={data} isSuccess={isSuccess} error={error} />)
         },
         {
           key: 'owner',
           label: 'My Recipes',
-          children: ( <RecipeList tabKey='owner' />)
+          children: ( <RecipeList tabKey='owner' data={data} isSuccess={isSuccess} error={error} />)
         }
       ];
 
@@ -32,13 +100,13 @@ const RecipesHome = () => {
         {
           key: 'unpublished',
           label: 'Unpublished Recipes',
-          children: ( <RecipeList tabKey='unpublished' />)
+          children: ( <RecipeList tabKey='unpublished' data={data} isSuccess={isSuccess} error={error} />)
         }
       )
     }
 
     return (
-        <Tabs tabBarExtraContent={newRecipeButton} items={items} />
+        <Tabs tabBarExtraContent={extraContent} items={items} />
     );
 };
 

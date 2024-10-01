@@ -1,29 +1,23 @@
 import { Alert, Empty, Row } from 'antd';
-import { useGetRecipesQuery } from '../../features/recipes/recipesApiSlice';
 import RecipeCard from './RecipeCard';
 import { useAuth } from '../../hooks/useAuth';
+import { Recipe } from '../../models/recipe';
+import { EntityState } from '@reduxjs/toolkit';
 
 interface Props {
     tabKey: string;
+    data: EntityState<Recipe, number> | undefined;
+    isSuccess: boolean;
+    error: any;
 }
 
 const RecipeList = (props: Props) => {
     const { email, isAdmin } = useAuth();
 
-    // Uncomment below for polling
-    // const { data, isSuccess, error } = useGetRecipesQuery(undefined, {
-    //     pollingInterval: 15000,
-    //     refetchOnFocus: true,
-    //     refetchOnMountOrArgChange: true
-    // });
-
-    // Comment below for polling
-    const { data, isSuccess, isError, error } = useGetRecipesQuery();
-
     let content;
 
-    if (isSuccess) {
-        const { ids, entities } = data;
+    if (props.isSuccess) {
+        const { ids, entities } = props.data!;
 
         let recipeIds: number[] = [];
 
@@ -69,23 +63,23 @@ const RecipeList = (props: Props) => {
     }
 
     let errorContent
-    if (error) {
+    if (props.error) {
         content = <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
-        if ('status' in error) {
+        if ('status' in props.error) {
             let message;
-            if ('error' in error) {
-                message = error.error;
+            if ('error' in props.error) {
+                message = props.error.error;
             } else {
-                const rawMessage = JSON.stringify(error.data);
+                const rawMessage = JSON.stringify(props.error.data);
                 message = JSON.parse(rawMessage).message;
             }
-            errorContent = <Alert message={`Error: ${error?.status}`} description={message} type='error'/>
+            errorContent = <Alert message={`Error: ${props.error?.status}`} description={message} type='error'/>
         }
     }
 
     return (
         <>
-            { isError && errorContent }
+            { props.error && errorContent }
             { content }
         </>
     );
