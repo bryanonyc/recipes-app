@@ -5,6 +5,7 @@ import { useMemo, useState } from 'react';
 import { isNil, isNotEmpty, isNotNil } from 'ramda';
 import { createSearchParams, useNavigate, useSearchParams } from 'react-router-dom';
 import { useGetRecipesQuery } from './recipesApiSlice';
+import StickyBox from 'react-sticky-box';
 
 const { Search } = Input;
 
@@ -74,7 +75,6 @@ const RecipesHome = () => {
     const extraContent = (
         <Search
             placeholder="Search recipes"
-            className='search-input'
             onChange={(e) => setSearchText(e.target.value)}
             onSearch={doSearch}
             defaultValue={initialSearchTerm!}
@@ -105,8 +105,18 @@ const RecipesHome = () => {
       )
     }
 
+    const renderTabBar: TabsProps['renderTabBar'] = (props, DefaultTabBar) => (
+        <StickyBox offsetTop={64} offsetBottom={20} style={{ zIndex: 1 }}>
+            <DefaultTabBar {...props} style={{ background: '#f5f5f5' }} />
+        </StickyBox>
+    );
+
     return (
-        <Tabs tabBarExtraContent={extraContent} items={items} />
+        <Tabs
+          tabBarExtraContent={extraContent}
+          items={items}
+          renderTabBar={renderTabBar}
+        />
     );
 };
 
