@@ -94,11 +94,6 @@ const RecipesHome = () => {
           label: 'Published Recipes',
           children: ( <RecipeList tabKey='published' data={data} isSuccess={isSuccess} error={error} />)
         },
-        {
-          key: 'owner',
-          label: 'My Recipes',
-          children: ( <RecipeList tabKey='owner' data={data} isSuccess={isSuccess} error={error} />)
-        }
       ];
 
     const renderTabBar: TabsProps['renderTabBar'] = (props, DefaultTabBar) => (
