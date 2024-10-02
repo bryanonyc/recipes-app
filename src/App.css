@@ -227,3 +227,8 @@ body {
   border: 1px solid;
   max-width: 250px;
 }
+
+.unpublished-card {
+  border: 1px solid orange;
+  max-width: 250px;
+}

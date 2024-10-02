@@ -54,6 +54,14 @@ const RecipeCard = (props: Props) => {
         cardActions.push(<DeleteOutlined key="delete" onClick={handleOnDeleteClick}/>);
     }
 
+    let cardClass = 'card';
+
+    if (!recipe?.isPublished) {
+        cardClass = 'unpublished-card';
+    } else if (recipe?.author.email === email) {
+        cardClass = 'owner-card'
+    }
+
     let content =
         <Col key={props.recipeId}>
             <Card
@@ -62,7 +70,7 @@ const RecipeCard = (props: Props) => {
                         {recipe?.title}
                     </Tooltip>
                 )}
-                className={recipe?.author.email === email ? 'owner-card' : 'card'}
+                className={cardClass}
                 actions={cardActions}
             >
                 <Descriptions column={1}>

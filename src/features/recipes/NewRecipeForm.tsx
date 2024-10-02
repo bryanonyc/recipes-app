@@ -44,7 +44,11 @@ const NewRecipeForm = () => {
 
         try {
             await addNewRecipe(body).unwrap();
-            antdMessage.success('Your recipe has been submitted. Once reviewed by an admin, it will appear in the Published Recipes tab.', 5);
+            const msg = (<>
+                Your recipe has been submitted. Once reviewed by an admin,<br />
+                it will appear in the Published Recipes tab.
+            </>);
+            antdMessage.success(msg, 5);
             resetForm();
             navigate('/recipes');
         } catch (err: any) {
