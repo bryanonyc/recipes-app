@@ -1,5 +1,5 @@
 import { Dropdown, Space } from 'antd';
-import { DownOutlined } from '@ant-design/icons';
+import { UserOutlined } from '@ant-design/icons';
 import { useAuth } from '../hooks/useAuth';
 
 import type { MenuProps } from 'antd';
@@ -12,11 +12,34 @@ export const UserDropdown = () => {
 
     const adminItems: MenuProps['items'] = [
         {
-            key: 'viewUnpublished',
+            key: 'recipes',
+            label: 'Recipes',
+            disabled: true,
+        },
+        {
+            type: 'divider',
+        },
+        {
+            key: 'mine',
+            label: <Link to='/owner'>My Recipes</Link>,
+        },
+        {
+            key: 'uunpublished',
             label: <Link to='/unpublished'>Review Unpublished Recipes</Link>,
         },
         {
-            key: 'manageUsers',
+            type: 'divider',
+        },
+        {
+            key: 'tasks',
+            label: 'Admin Tasks',
+            disabled: true,
+        },
+        {
+            type: 'divider',
+        },
+        {
+            key: 'users',
             label: <Link to='/users'>Manage Users</Link>,
         },
         {
@@ -30,6 +53,21 @@ export const UserDropdown = () => {
 
     const nonAdminItems: MenuProps['items'] = [
         {
+            key: 'recipes',
+            label: 'Recipes',
+            disabled: true,
+        },
+        {
+            type: 'divider',
+        },
+        {
+            key: 'mine',
+            label: <Link to='/owner'>My Recipes</Link>,
+        },
+        {
+            type: 'divider',
+        },
+        {
             key: 'logout',
             label: <LogoutButton />,
         }
@@ -38,10 +76,10 @@ export const UserDropdown = () => {
     let items: MenuProps['items'] = isAdmin ? adminItems : nonAdminItems;
 
     return (
-        <Dropdown menu={{ items }}>
+        <Dropdown menu={{ items }} arrow placement='bottom'>
             <Space>
                 { name }
-                <DownOutlined />
+                <UserOutlined />
             </Space>
         </Dropdown>
     );
