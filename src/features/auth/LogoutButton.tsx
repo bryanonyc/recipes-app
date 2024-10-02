@@ -21,7 +21,7 @@ const LogoutButton = () => {
         if (isSuccess) {
             dispatch(logOut());
             dispatch(apiSlice.util.resetApiState());
-            navigate('/');
+            navigate('/login');
         } else if (error) {
             let errorMessage = 'Logout Error';
             // if ('status' in error) {
@@ -43,9 +43,10 @@ const LogoutButton = () => {
         <>
         { contextHolder }
         <Button
-            type="link"
+            type="primary"
             size='small'
             onClick={sendLogout}
+            className='logout-button'
         >
             Logout
         </Button>
