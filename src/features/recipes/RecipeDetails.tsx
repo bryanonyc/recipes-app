@@ -44,14 +44,14 @@ const RecipeDetails = () => {
         }
     };
 
-    const isAuthor = isNotNil(recipe.author) ? email === recipe.author.email : false;
+    const isAuthor = isNotNil(recipe.author) ? email === recipe.author?.email : false;
 
     const getAuthorDisplayName = () => {
         let displayName = 'Unknown';
         if (isNotNil(recipe.author)) {
             const pattern = /^\w+\s?./; // match first name and first character of last name
-            if (isNotNil(recipe.author.name.match(pattern))) {
-                displayName = recipe.author.name.match(pattern)![0];
+            if (isNotNil(recipe.author?.name.match(pattern))) {
+                displayName = recipe.author?.name.match(pattern)![0];
             }
             return displayName;
         }
