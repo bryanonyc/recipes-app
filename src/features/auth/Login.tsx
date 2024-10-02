@@ -3,9 +3,10 @@ import { useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '../../app/hooks';
 import { setCredentials } from '../../features/auth/authSlice';
 import { useLoginMutation } from '../../features/auth/authApiSlice';
-import { Alert, Button, Form, Input } from 'antd';
+import { Alert, Button, Checkbox, Form, Input } from 'antd';
 import { LoginCredentials } from '../../models/loginCredentials';
 import { getErrorMessage } from '../../components/Errors';
+import { usePersist } from '../../hooks/usePersist';
 
 const Login = () => {
     const [errMsg, setErrMsg] = useState('');
@@ -15,9 +16,9 @@ const Login = () => {
 
     const [login] = useLoginMutation();
 
-    // const [persist, setPersist] = usePersist();
+    const [persist, setPersist] = usePersist();
 
-    // const handleToggle = () => setPersist((prev: boolean) => !prev);
+    const handleToggle = () => setPersist((prev: boolean) => !prev);
 
     const gotoRegister = () => {
         navigate("/register");
@@ -68,12 +69,12 @@ const Login = () => {
                         <Input.Password />
                 </Form.Item>
 
-                {/* <Checkbox
+                <Checkbox
                     onChange={handleToggle}
                     checked={persist}
                 >
                     Trust This Device
-                </Checkbox> */}
+                </Checkbox>
 
                 <Button type="primary" htmlType="submit">
                     Login
