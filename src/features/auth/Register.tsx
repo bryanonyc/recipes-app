@@ -53,30 +53,19 @@ const Register = () => {
                     label="Name"
                     name="name"
                     rules={[{ required: true, message: 'Please input your name.'}]}>
-                        <Input
-                            // value={name}
-                            placeholder='John Doe'
-                            // onChange={(e) => setName(e.target.value)}
-                        />
+                        <Input placeholder='John Doe' />
                 </Form.Item>
                 <Form.Item
-                    label="Email"
-                    name="email"
-                    rules={[{ required: true, message: 'Please input your email.'}]}>
-                        <Input
-                            // value={email}
-                            placeholder='youremail@example.com'
-                            // onChange={(e) => setEmail(e.target.value)}
-                        />
+                    label="Username"
+                    name="username"
+                    rules={[{ required: true, message: 'Please input your username.'}]}>
+                        <Input />
                 </Form.Item>
                 <Form.Item
                     label="Password"
                     name="password"
                     rules={[{ required: true, message: 'Please input your password.'}]}>
-                        <Input.Password
-                            // value={password}
-                            // onChange={(e) => setPassword(e.target.value)}
-                        />
+                        <Input.Password />
                 </Form.Item>
                 <Button type="primary" htmlType="submit">
                     Register

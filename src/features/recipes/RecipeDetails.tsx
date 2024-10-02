@@ -11,7 +11,7 @@ const { Meta } = Card;
 
 const RecipeDetails = () => {
     const { id } = useParams();
-    const { email, isAdmin } = useAuth();
+    const { username, isAdmin } = useAuth();
     const navigate = useNavigate();
 
     const recipe = useAppSelector(state => selectRecipesById(state, Number(id)));
@@ -31,7 +31,7 @@ const RecipeDetails = () => {
         const body = {
             id: Number(id),
             author: {
-                email
+                username
             }
         };
 
@@ -44,7 +44,7 @@ const RecipeDetails = () => {
         }
     };
 
-    const isAuthor = isNotNil(recipe.author) ? email === recipe.author?.email : false;
+    const isAuthor = isNotNil(recipe.author) ? username === recipe.author?.username : false;
 
     const getAuthorDisplayName = () => {
         let displayName = 'Unknown';

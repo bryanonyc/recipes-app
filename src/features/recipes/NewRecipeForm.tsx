@@ -7,7 +7,7 @@ import { getErrorMessage } from '../../components/Errors';
 
 const NewRecipeForm = () => {
     const navigate = useNavigate();
-    const { email, name } = useAuth();
+    const { username, name } = useAuth();
 
     const [form] = Form.useForm();
     const { message: antdMessage } = App.useApp();
@@ -37,7 +37,7 @@ const NewRecipeForm = () => {
         const body = {
             ...values,
             author: {
-                email,
+                username,
                 name,
             }
         };

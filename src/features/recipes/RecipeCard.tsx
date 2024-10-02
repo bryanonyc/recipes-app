@@ -14,7 +14,7 @@ interface Props {
 
 const RecipeCard = (props: Props) => {
     const navigate = useNavigate();
-    const { email } = useAuth();
+    const { username } = useAuth();
     const { recipe } = useGetRecipesQuery({}, {
         selectFromResult: ({ data }) => ({
             recipe: data?.entities[props.recipeId]
@@ -50,7 +50,7 @@ const RecipeCard = (props: Props) => {
 
     const cardActions = [<InfoCircleOutlined key="info" onClick={handleOnInfoClick} />];
 
-    if (props.showDelete || recipe?.author.email === email) {
+    if (props.showDelete || recipe?.author.username === username) {
         cardActions.push(<DeleteOutlined key="delete" onClick={handleOnDeleteClick}/>);
     }
 
@@ -58,7 +58,7 @@ const RecipeCard = (props: Props) => {
 
     if (!recipe?.isPublished) {
         cardClass = 'unpublished-card';
-    } else if (recipe?.author.email === email) {
+    } else if (recipe?.author.username === username) {
         cardClass = 'owner-card'
     }
 

@@ -61,8 +61,8 @@ const EditUserForm = () => {
                     <Form.Item label="Name">
                         {user?.name}
                     </Form.Item>
-                    <Form.Item label="Email">
-                        {user?.email}
+                    <Form.Item label="Username">
+                        {user?.username}
                     </Form.Item>
                     <Form.Item label="Admin" name="isAdmin" valuePropName="checked">
                         <Checkbox defaultChecked={user?.isAdmin} />

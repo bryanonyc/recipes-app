@@ -4,7 +4,7 @@ import { jwtDecode, JwtPayload } from 'jwt-decode';
 
 interface UserInfo extends JwtPayload {
     name: string,
-    email: string,
+    username: string,
     isAdmin: boolean,
 }
 
@@ -13,10 +13,10 @@ export const useAuth = () => {
 
     if (accessToken) {
         const decodedToken = jwtDecode<UserInfo>(accessToken);
-        const { name, email, isAdmin } = decodedToken;
+        const { name, username, isAdmin } = decodedToken;
 
-        return { name, email, isAdmin };
+        return { name, username, isAdmin };
     } else {
-        return { name: '', email: '', isAdmin: false };
+        return { name: '', username: '', isAdmin: false };
     }
 }

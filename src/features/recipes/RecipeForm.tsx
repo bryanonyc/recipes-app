@@ -84,7 +84,7 @@ const RecipeForm = (props: Props) => {
             <Form.Item
                 label="Ingredients"
                 name="ingredients"
-                rules={[{ required: true, message: 'Please input your email.'}]}
+                rules={[{ required: true, message: 'Please input the ingredients.'}]}
                 >
                 <TextArea
                     rows={4}
@@ -94,7 +94,7 @@ const RecipeForm = (props: Props) => {
             <Form.Item
                 label="Directions"
                 name="directions"
-                rules={[{ required: true, message: 'Please input your email.'}]}
+                rules={[{ required: true, message: 'Please input the directions.'}]}
                 >
                 <TextArea
                     rows={4}
@@ -104,7 +104,7 @@ const RecipeForm = (props: Props) => {
             <Form.Item
                 label="Prep Time (minutes)"
                 name="prepTime"
-                rules={[{ required: true, message: 'Please input your email.'}]}
+                rules={[{ required: true, message: 'Please input the prep time.'}]}
                 >
                 <InputNumber
                     min={1}
@@ -114,7 +114,7 @@ const RecipeForm = (props: Props) => {
             <Form.Item
                 label="Cook Time (minutes)"
                 name="cookTime"
-                rules={[{ required: true, message: 'Please input your email.'}]}
+                rules={[{ required: true, message: 'Please input the cook time.'}]}
                 >
                 <InputNumber
                     min={1}
@@ -124,7 +124,7 @@ const RecipeForm = (props: Props) => {
             <Form.Item
                 label="Total Time (minutes)"
                 name="totalTime"
-                rules={[{ required: true, message: 'Please input your email.'}]}
+                rules={[{ required: true, message: 'Please input the total time.'}]}
                 >
                 <InputNumber
                     min={1}
@@ -134,7 +134,7 @@ const RecipeForm = (props: Props) => {
             <Form.Item
                 label="Servings"
                 name="servings"
-                rules={[{ required: true, message: 'Please input your email.'}]}
+                rules={[{ required: true, message: 'Please input the number of servings.'}]}
                 >
                 <InputNumber
                     placeholder='4'

@@ -9,9 +9,9 @@ import '../../App.css';
 
 const Welcome = () => {
     const accessToken = useAppSelector(selectCurrentToken);
-    const { email, name } = useAuth();
+    const { username, name } = useAuth();
 
-    const loggedIn = [accessToken, email, name].every(isNotNil)
+    const loggedIn = [accessToken, username, name].every(isNotNil)
     const navigate = useNavigate();
 
     const gotoLogin = () => {
@@ -47,7 +47,7 @@ const Welcome = () => {
                     </Button>
                 </Space>
 
-                {loggedIn ? <div>You're logged in as: {email}</div> : <div />}
+                {loggedIn ? <div>You're logged in as: {username}</div> : <div />}
             </div>
         </div>
     );

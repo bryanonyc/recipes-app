@@ -15,7 +15,7 @@ const EditRecipeForm = () => {
         })
     });
 
-    const { email, name } = useAuth();
+    const { username, name } = useAuth();
     const [form] = Form.useForm();
     const { message: antdMessage }= App.useApp();
     const [updateRecipe] = useUpdateRecipeMutation();
@@ -25,7 +25,7 @@ const EditRecipeForm = () => {
             ...values,
             id: Number(id),
             author: {
-                email,
+                username,
                 name,
             }
         };
@@ -40,7 +40,7 @@ const EditRecipeForm = () => {
     };
 
     let content;
-    if (email === recipe?.author.email) {
+    if (username === recipe?.author.username) {
         content = (
             <>
                 <Card

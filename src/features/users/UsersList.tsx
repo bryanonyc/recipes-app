@@ -101,10 +101,10 @@ const UsersList = () => {
             ...getColumnSearchProps('name'),
         },
         {
-            title: 'Email',
-            dataIndex: 'email',
-            key: 'email',
-            ...getColumnSearchProps('email'),
+            title: 'Username',
+            dataIndex: 'username',
+            key: 'username',
+            ...getColumnSearchProps('username'),
         },
         {
             title: 'Admin',
