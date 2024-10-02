@@ -32,7 +32,7 @@ const PersistLogin = () => {
                     setTrueSuccess(true);
                 }
                 catch (err) {
-                    console.error(err);
+                    console.error('PersistLogin error', err);
                 }
             }
 
