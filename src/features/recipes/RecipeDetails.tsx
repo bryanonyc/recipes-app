@@ -45,7 +45,17 @@ const RecipeDetails = () => {
     };
 
     const isAuthor = isNotNil(recipe.author) ? email === recipe.author.email : false;
-    const authorDisplayName =  isNotNil(recipe.author) ? recipe.author?.email.substring(0, recipe.author?.email.indexOf('@')) : 'Unknown';
+
+    const getAuthorDisplayName = () => {
+        let displayName = 'Unknown';
+        if (isNotNil(recipe.author)) {
+            const pattern = /^\w+\s?./; // match first name and first character of last name
+            if (isNotNil(recipe.author.name.match(pattern))) {
+                displayName = recipe.author.name.match(pattern)![0];
+            }
+            return displayName;
+        }
+    }
 
     let content;
 
@@ -58,7 +68,7 @@ const RecipeDetails = () => {
             <Card>
                 <Meta
                     title={recipe.title}
-                    description={`Submitted by: ${authorDisplayName}`}
+                    description={`Submitted by: ${getAuthorDisplayName()}.`}
                     style={{ paddingBottom: '1rem'}}
                 />
                 <Descriptions column={1} bordered>
