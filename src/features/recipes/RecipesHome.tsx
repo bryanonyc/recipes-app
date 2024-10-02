@@ -19,9 +19,6 @@ const RecipesHome = () => {
       pollInterval = 0;
     }
 
-    const location = useLocation();
-    const activeKey = location.hash.substring(1); // remove the leading #
-
     const [searchText, setSearchText] = useState('');
     const navigate = useNavigate();
     const [urlSearchParams] = useSearchParams();
@@ -104,11 +101,9 @@ const RecipesHome = () => {
 
     return (
         <Tabs
-          defaultActiveKey={activeKey}
           tabBarExtraContent={extraContent}
           items={items}
           renderTabBar={renderTabBar}
-          onTabClick={(key) => { window.location.hash = key; }}
         />
     );
 };
