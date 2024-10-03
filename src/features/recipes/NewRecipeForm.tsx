@@ -50,7 +50,7 @@ const NewRecipeForm = () => {
             </>);
             antdMessage.success(msg, 5);
             resetForm();
-            navigate('/recipes');
+            navigate(-1);
         } catch (err: any) {
             antdMessage.error(getErrorMessage(err), 10);
         }

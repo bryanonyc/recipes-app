@@ -38,7 +38,7 @@ const RecipeDetails = () => {
         try {
             await publishRecipe(body).unwrap();
             antdMessage.success('Recipe updated successfully.', 5);
-            navigate('/recipes');
+            navigate(-1);
         } catch (err: any) {
             antdMessage.error(getErrorMessage(err), 10);
         }
