@@ -4,7 +4,7 @@ import RecipeList from './RecipeList';
 import { useGetRecipesQuery } from './recipesApiSlice';
 
 const UnpublishedHome = () => {
-    const { data, isSuccess, error } = useGetRecipesQuery({});
+    const { data, isSuccess, isLoading, error } = useGetRecipesQuery({});
 
     const navigate = useNavigate();
 
@@ -18,7 +18,7 @@ const UnpublishedHome = () => {
         {
             key: 'unpublished',
             label: 'Unpublished Recipes',
-            children: ( <RecipeList tabKey='unpublished' data={data} isSuccess={isSuccess} error={error} />)
+            children: ( <RecipeList tabKey='unpublished' data={data} isSuccess={isSuccess} isLoading={isLoading} error={error} />)
         }
     ];
 

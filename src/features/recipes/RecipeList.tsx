@@ -1,4 +1,4 @@
-import { Alert, Empty, Row } from 'antd';
+import { Alert, Empty, Row, Spin } from 'antd';
 import RecipeCard from './RecipeCard';
 import { useAuth } from '../../hooks/useAuth';
 import { Recipe } from '../../models/recipe';
@@ -8,6 +8,7 @@ interface Props {
     tabKey: string;
     data: EntityState<Recipe, number> | undefined;
     isSuccess: boolean;
+    isLoading: boolean;
     error: any;
 }
 
@@ -15,6 +16,14 @@ const RecipeList = (props: Props) => {
     const { username, isAdmin } = useAuth();
 
     let content;
+
+    if (props.isLoading) {
+        content = (
+            <div className='spin-container'>
+                <Spin />
+            </div>
+        )
+    }
 
     if (props.isSuccess) {
         const { ids, entities } = props.data!;

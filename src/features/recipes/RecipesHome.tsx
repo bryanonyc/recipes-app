@@ -51,7 +51,7 @@ const RecipesHome = () => {
     );
 
     // Uncomment below for polling
-    const { data, isSuccess, error } = useGetRecipesQuery(buildQueryString, {
+    const { data, isSuccess, error, isLoading } = useGetRecipesQuery(buildQueryString, {
         pollingInterval: pollInterval,
         refetchOnFocus: true,
         refetchOnMountOrArgChange: true
@@ -89,7 +89,7 @@ const RecipesHome = () => {
         {
           key: 'published',
           label: 'Published Recipes',
-          children: ( <RecipeList tabKey='published' data={data} isSuccess={isSuccess} error={error} />)
+          children: ( <RecipeList tabKey='published' data={data} isSuccess={isSuccess} isLoading={isLoading} error={error} />)
         },
       ];
 
