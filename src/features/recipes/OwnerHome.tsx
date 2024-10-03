@@ -12,7 +12,7 @@ const OwnerHome = () => {
         navigate('/recipes');
     };
 
-    const backToRecipes = <Button type='primary' onClick={gotoRecipes}>Back To Recipes</Button>;
+    const backToRecipes = <Button type='primary' onClick={gotoRecipes}>Published Recipes</Button>;
 
     const items: TabsProps['items'] = [
         {
