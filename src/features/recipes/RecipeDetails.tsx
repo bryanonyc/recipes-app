@@ -3,7 +3,7 @@ import { useAppSelector } from '../../app/hooks';
 import { selectRecipesById, usePublishRecipeMutation } from './recipesApiSlice';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
-import { isNil, isNotNil, split } from 'ramda';
+import { isNil, isNotEmpty, isNotNil, split } from 'ramda';
 import { FORBIDDEN_403, NOT_FOUND_404 } from '../../components/Results';
 import { getErrorMessage } from '../../components/Errors';
 
@@ -61,8 +61,13 @@ const RecipeDetails = () => {
         const tagColors = ['red','orange','green','cyan','blue','purple'];
 
         return split(',', recipe.tags).map(name => {
-            const color = tagColors[Math.floor(Math.random() * tagColors.length)];
-            return <Tag color={color}>{name}</Tag>
+            const trimmedName = name.trim();
+            if (isNotEmpty(name.trim())) {
+                const color = tagColors[Math.floor(Math.random() * tagColors.length)];
+                return <Tag key={trimmedName} color={color}>{trimmedName}</Tag>
+            } else {
+                return <></>
+            }
         })
     };
 
