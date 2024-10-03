@@ -146,7 +146,7 @@ const RecipeForm = (props: Props) => {
                 name="tags"
                 >
                 <Input
-                    placeholder='burgers, grill, easy'
+                    placeholder='comma separated (burger, grill, easy)'
                 />
             </Form.Item>
             <div className='submit-button-container'>
