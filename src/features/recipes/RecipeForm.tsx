@@ -30,11 +30,12 @@ const RecipeForm = (props: Props) => {
 
     const handleCancel = () => {
         props.form.resetFields();
-        if (isNil(recipe)) {
-            navigate(-1);
-        } else {
-            navigate(`/recipes/#owner`)
-        }
+        // if (isNil(recipe)) {
+        //     navigate(-1);
+        // } else {
+        //     navigate(-1);
+        // }
+        navigate(-1);
     };
 
     const handleSubmit = async (values: RecipeFormData) => {
