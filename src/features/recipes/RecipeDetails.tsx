@@ -1,9 +1,9 @@
-import { App, Button, Card, Descriptions, Space } from 'antd';
+import { App, Button, Card, Descriptions, Space, Tag } from 'antd';
 import { useAppSelector } from '../../app/hooks';
 import { selectRecipesById, usePublishRecipeMutation } from './recipesApiSlice';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
-import { isNil, isNotNil } from 'ramda';
+import { isNil, isNotNil, split } from 'ramda';
 import { FORBIDDEN_403, NOT_FOUND_404 } from '../../components/Results';
 import { getErrorMessage } from '../../components/Errors';
 
@@ -57,6 +57,15 @@ const RecipeDetails = () => {
         }
     }
 
+    const generateTags = () => {
+        const tagColors = ['red','orange','green','cyan','blue','purple'];
+
+        return split(',', recipe.tags).map(name => {
+            const color = tagColors[Math.floor(Math.random() * tagColors.length)];
+            return <Tag color={color}>{name}</Tag>
+        })
+    };
+
     let content;
 
     if (isNil(recipe)) {
@@ -79,7 +88,7 @@ const RecipeDetails = () => {
                     <Descriptions.Item label="Cook Time">{recipe.cookTime} minutes</Descriptions.Item>
                     <Descriptions.Item label="Total Time">{recipe.totalTime} minutes</Descriptions.Item>
                     <Descriptions.Item label="Servings">{recipe.servings}</Descriptions.Item>
-                    <Descriptions.Item label="Tags">{recipe.tags}</Descriptions.Item>
+                    <Descriptions.Item label="Tags">{generateTags()}</Descriptions.Item>
                 </Descriptions>
             </Card>
             <Space>
