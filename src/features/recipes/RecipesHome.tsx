@@ -2,7 +2,7 @@ import { Input, Tabs, TabsProps } from 'antd';
 import RecipeList from './RecipeList';
 import { useMemo, useState } from 'react';
 import { isNil, isNotEmpty, isNotNil } from 'ramda';
-import { createSearchParams, useLocation, useNavigate, useSearchParams } from 'react-router-dom';
+import { createSearchParams, useNavigate, useSearchParams } from 'react-router-dom';
 import { useGetRecipesQuery } from './recipesApiSlice';
 import StickyBox from 'react-sticky-box';
 
