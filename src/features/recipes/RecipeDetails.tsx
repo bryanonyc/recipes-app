@@ -58,17 +58,20 @@ const RecipeDetails = () => {
     }
 
     const generateTags = () => {
-        const tagColors = ['red','orange','green','cyan','blue','purple'];
+        if (isNotNil(recipe.tags) && isNotEmpty(recipe.tags)) {
+            const tagColors = ['red','orange','green','cyan','blue','purple'];
 
-        return split(',', recipe.tags).map(name => {
-            const trimmedName = name.trim();
-            if (isNotEmpty(name.trim())) {
-                const color = tagColors[Math.floor(Math.random() * tagColors.length)];
-                return <Tag key={trimmedName} color={color}>{trimmedName}</Tag>
-            } else {
-                return <></>
-            }
-        })
+
+            return split(',', recipe.tags).map(name => {
+                const trimmedName = name.trim();
+                if (isNotEmpty(name.trim())) {
+                    const color = tagColors[Math.floor(Math.random() * tagColors.length)];
+                    return <Tag key={trimmedName} color={color}>{trimmedName}</Tag>
+                } else {
+                    return <></>
+                }
+            });
+        }
     };
 
     let content;
