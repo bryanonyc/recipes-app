@@ -66,7 +66,7 @@ const RecipeForm = (props: Props) => {
             <Form.Item
                 label="Name"
                 name="title"
-                rules={[{ required: true, message: 'Please input your name.'}]}
+                rules={[{ required: true, message: 'Please input the name.'}]}
             >
                 <Input
                     placeholder='Amazing Burgers!'
