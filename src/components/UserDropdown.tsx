@@ -1,5 +1,5 @@
 import { Dropdown, Space } from 'antd';
-import { UserOutlined } from '@ant-design/icons';
+import { MenuOutlined } from '@ant-design/icons';
 import { useAuth } from '../hooks/useAuth';
 
 import type { MenuProps } from 'antd';
@@ -76,11 +76,11 @@ export const UserDropdown = () => {
     let items: MenuProps['items'] = isAdmin ? adminItems : nonAdminItems;
 
     return (
-        <Dropdown menu={{ items }} arrow placement='bottom'>
-            <Space>
-                { name }
-                <UserOutlined />
-            </Space>
-        </Dropdown>
+        <Space>
+            { name }
+            <Dropdown menu={{ items }} arrow placement='bottom'>
+                <MenuOutlined style={{ cursor: 'pointer' }} />
+            </Dropdown>
+        </Space>
     );
 }
