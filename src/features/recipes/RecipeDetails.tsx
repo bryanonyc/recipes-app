@@ -61,7 +61,6 @@ const RecipeDetails = () => {
         if (isNotNil(recipe.tags) && isNotEmpty(recipe.tags)) {
             const tagColors = ['red','orange','green','cyan','blue','purple'];
 
-
             return split(',', recipe.tags).map(name => {
                 const trimmedName = name.trim();
                 if (isNotEmpty(name.trim())) {
