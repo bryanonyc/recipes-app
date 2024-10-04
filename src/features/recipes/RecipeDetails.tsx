@@ -96,7 +96,7 @@ const RecipeDetails = () => {
 
             return split(',', recipe.tags).map(name => {
                 const trimmedName = name.trim();
-                if (isNotEmpty(name.trim())) {
+                if (isNotEmpty(trimmedName)) {
                     const color = tagColors[Math.floor(Math.random() * tagColors.length)];
                     return <Tag key={trimmedName} color={color}>{trimmedName}</Tag>
                 } else {
