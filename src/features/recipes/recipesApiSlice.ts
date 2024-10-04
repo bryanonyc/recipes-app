@@ -84,6 +84,26 @@ export const recipesApiSlice = apiSlice.injectEndpoints({
                 { type: 'Recipe' as const, id: arg.id }
             ]
         }),
+        addFavorite: builder.mutation({
+            query: ({ recipeId, username }) => ({
+                url: `/recipes/${recipeId}/favorite`,
+                method: 'POST',
+                body: { username }
+            }),
+            invalidatesTags: (result, error, arg) => [
+                { type: 'Recipe' as const, id: 'LIST' }
+            ]
+        }),
+        deleteFavorite: builder.mutation({
+            query: ({ recipeId, username }) => ({
+                url: `/recipes/${recipeId}/favorite`,
+                method: 'DELETE',
+                body: { username }
+            }),
+            invalidatesTags: (result, error, arg) => [
+                { type: 'Recipe' as const, id: arg.id }
+            ]
+        }),
     }),
 });
 
@@ -94,6 +114,8 @@ export const {
     useUpdateRecipeMutation,
     usePublishRecipeMutation,
     useDeleteRecipeMutation,
+    useAddFavoriteMutation,
+    useDeleteFavoriteMutation
 } = recipesApiSlice;
 
 // returns the query result object

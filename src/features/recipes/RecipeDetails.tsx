@@ -1,11 +1,12 @@
 import { App, Button, Card, Descriptions, Space, Tag } from 'antd';
 import { useAppSelector } from '../../app/hooks';
-import { selectRecipesById, usePublishRecipeMutation } from './recipesApiSlice';
+import { selectRecipesById, useAddFavoriteMutation, useDeleteFavoriteMutation, usePublishRecipeMutation } from './recipesApiSlice';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
 import { isNil, isNotEmpty, isNotNil, split } from 'ramda';
 import { FORBIDDEN_403, NOT_FOUND_404 } from '../../components/Results';
 import { getErrorMessage } from '../../components/Errors';
+import { isUserFavorite } from './RecipeList';
 
 const { Meta } = Card;
 
@@ -18,6 +19,8 @@ const RecipeDetails = () => {
 
     const { message: antdMessage } = App.useApp();
     const [publishRecipe] = usePublishRecipeMutation();
+    const [addFavorite] = useAddFavoriteMutation();
+    const [deleteFavorite] = useDeleteFavoriteMutation();
 
     const handleCancel = () => {
         navigate(-1);
@@ -38,6 +41,36 @@ const RecipeDetails = () => {
         try {
             await publishRecipe(body).unwrap();
             antdMessage.success('Recipe updated successfully.', 5);
+            navigate(-1);
+        } catch (err: any) {
+            antdMessage.error(getErrorMessage(err), 10);
+        }
+    };
+
+    const handleAddFavorite = async () => {
+        const body = {
+            recipeId: Number(id),
+            username
+        };
+
+        try {
+            await addFavorite(body).unwrap();
+            antdMessage.success('Recipe was added as a favorite.', 5);
+            navigate(-1);
+        } catch (err: any) {
+            antdMessage.error(getErrorMessage(err), 10);
+        }
+    };
+
+    const handleDeleteFavorte = async () => {
+        const body = {
+            recipeId: Number(id),
+            username
+        };
+
+        try {
+            await deleteFavorite(body).unwrap();
+            antdMessage.success('Recipe was removed as a favorite.', 5);
             navigate(-1);
         } catch (err: any) {
             antdMessage.error(getErrorMessage(err), 10);
@@ -102,6 +135,16 @@ const RecipeDetails = () => {
                 { isAdmin && !recipe.isPublished &&
                     <Button type="primary" onClick={handlePublish}>
                         Publish
+                    </Button>
+                }
+                { !isUserFavorite(recipe.favorites, username) &&
+                    <Button type="primary" onClick={handleAddFavorite}>
+                        Add Favorite
+                    </Button>
+                }
+                { isUserFavorite(recipe.favorites, username) &&
+                    <Button type="primary" onClick={handleDeleteFavorte}>
+                        Remove Favorite
                     </Button>
                 }
                 { isAuthor &&
