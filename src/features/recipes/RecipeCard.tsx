@@ -6,7 +6,8 @@ import { memo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getErrorMessage } from '../../components/Errors';
 import { useAuth } from '../../hooks/useAuth';
-import { includes, isNotEmpty, pluck } from 'ramda';
+import { isNotNil } from 'ramda';
+import { isUserFavorite } from './RecipeList';
 
 interface Props {
     recipeId: number,
@@ -57,17 +58,12 @@ const RecipeCard = (props: Props) => {
         ),
     ];
 
-    if (isNotEmpty(recipe?.favorites)) {
-        const users = pluck('user', recipe?.favorites!);
-        const usernames = pluck('username', users);
-
-        if (includes(username, usernames)) {
-            cardActions.push(
-                <Tooltip title='Your Favorite' color='red' className='default-cursor'>
-                    <HeartOutlined style={{ color: 'red' }} />
-                </Tooltip>
-            );
-        }
+    if (isNotNil(recipe) && isUserFavorite(recipe.favorites, username)) {
+        cardActions.push(
+            <Tooltip title='Your Favorite' color='red' className='default-cursor'>
+                <HeartOutlined style={{ color: 'red' }} />
+            </Tooltip>
+        );
     }
 
     if (props.showDelete || recipe?.author.username === username) {

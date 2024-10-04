@@ -4,6 +4,7 @@ import { useAuth } from '../../hooks/useAuth';
 import { Recipe } from '../../models/recipe';
 import { EntityState } from '@reduxjs/toolkit';
 import { isNotEmpty, pluck, includes } from 'ramda';
+import { Favorite } from '../../models/favorite';
 
 interface Props {
     tabKey: string;
@@ -12,6 +13,15 @@ interface Props {
     isLoading: boolean;
     error: any;
 }
+
+export const isUserFavorite = (recipeFavorites: Favorite[], username: string) => {
+    if (isNotEmpty(recipeFavorites)) {
+        const users = pluck('user', recipeFavorites);
+        const usernames = pluck('username', users);
+        return includes(username, usernames);
+    }
+    return false;
+};
 
 const RecipeList = (props: Props) => {
     const { username, isAdmin } = useAuth();
@@ -48,13 +58,7 @@ const RecipeList = (props: Props) => {
         } else if (props.tabKey === 'favorite') {
             recipeIds = ids.filter(recipeId => {
                 const recipe = entities[recipeId];
-                if (isNotEmpty(recipe.favorites)) {
-                    const users = pluck('user', recipe?.favorites!);
-                    const usernames = pluck('username', users);
-                    return includes(username, usernames);
-                } else {
-                    return false;
-                }
+                return isUserFavorite(recipe.favorites, username);
             });
         } else if (props.tabKey === 'unpublished') {
             recipeIds = ids.filter(recipeId =>
