@@ -1,11 +1,12 @@
 import { App, Card, Col, Descriptions, Modal, Tooltip } from "antd"
 import { useGetRecipesQuery, useDeleteRecipeMutation } from "./recipesApiSlice"
-import { DeleteOutlined, InfoCircleOutlined } from '@ant-design/icons';
+import { DeleteOutlined, HeartOutlined, InfoCircleOutlined } from '@ant-design/icons';
 import { useState } from 'react';
 import { memo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getErrorMessage } from '../../components/Errors';
 import { useAuth } from '../../hooks/useAuth';
+import { includes, isNotEmpty, pluck } from 'ramda';
 
 interface Props {
     recipeId: number,
@@ -50,14 +51,31 @@ const RecipeCard = (props: Props) => {
 
     const cardActions = [
         (
-            <Tooltip title='View Details' color='green'>
-                <InfoCircleOutlined key="info" onClick={handleOnInfoClick} />
+            <Tooltip title='View Details' color='blue'>
+                <InfoCircleOutlined key="info" onClick={handleOnInfoClick} style={{ color: 'blue' }}/>
             </Tooltip>
         ),
     ];
 
+    if (isNotEmpty(recipe?.favorites)) {
+        const users = pluck('user', recipe?.favorites!)
+        const usernames = pluck('username', users);
+
+        if (includes(username, usernames)) {
+            cardActions.push(
+                <Tooltip title='Your Favorite' color='red' className='default-cursor'>
+                    <HeartOutlined style={{ color: 'red' }} />
+                </Tooltip>
+            );
+        }
+    }
+
     if (props.showDelete || recipe?.author.username === username) {
-        cardActions.push(<DeleteOutlined key="delete" onClick={handleOnDeleteClick}/>);
+        cardActions.push(
+            <Tooltip title='Delete Recipe' color='orange' className='default-cursor'>
+                <DeleteOutlined key="delete" onClick={handleOnDeleteClick} style={{ color: 'orange' }} />
+            </Tooltip>
+        );
     }
 
     let cardClass = 'card';
@@ -72,7 +90,7 @@ const RecipeCard = (props: Props) => {
         <Col key={props.recipeId}>
             <Card
                 title={(
-                    <Tooltip title={recipe?.title} color='blue' className='default-cursor'>
+                    <Tooltip title={recipe?.title} color='green' className='default-cursor'>
                         {recipe?.title}
                     </Tooltip>
                 )}

@@ -1,3 +1,4 @@
+import { Favorite } from './favorite';
 import type { RecipeRating } from "./recipe-rating";
 import type { User } from "./user";
 
@@ -16,4 +17,5 @@ export type Recipe = {
     isPublished: boolean;
     rating: RecipeRating[];
     tags: string;
+    favorites: Favorite[];
   }
