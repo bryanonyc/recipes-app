@@ -15,11 +15,10 @@ const Register = () => {
 
     const handleSubmit = async (values: RegisterCredentials) => {
         try {
-            await register(values).unwrap();
-            antdMessage.success('Registration was successful.', 5);
+            const response = await register(values).unwrap();
+            antdMessage.success(response.message, 5);
             gotoLogin();
         } catch (err: any) {
-            console.error(err);
             const errorMsg = getErrorMessage(err);
             setErrMsg(errorMsg);
         }

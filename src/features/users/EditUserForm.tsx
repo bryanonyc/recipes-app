@@ -32,8 +32,8 @@ const EditUserForm = () => {
         };
 
         try {
-            await updateUser(body).unwrap();
-            antdMessage.success('User updated successfully.', 5);
+            const result = await updateUser(body).unwrap();
+            antdMessage.success(result.message, 5);
             navigate('/users');
         } catch (err: any) {
             antdMessage.error(getErrorMessage(err), 10);
