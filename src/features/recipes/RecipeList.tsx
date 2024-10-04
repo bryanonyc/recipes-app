@@ -3,6 +3,7 @@ import RecipeCard from './RecipeCard';
 import { useAuth } from '../../hooks/useAuth';
 import { Recipe } from '../../models/recipe';
 import { EntityState } from '@reduxjs/toolkit';
+import { isNotEmpty, pluck, includes } from 'ramda';
 
 interface Props {
     tabKey: string;
@@ -41,12 +42,21 @@ const RecipeList = (props: Props) => {
                 entities[recipeId].author?.username === username
             );
         } else if (props.tabKey === 'published') {
-            // recipeIds = [...ids];
             recipeIds = ids.filter(recipeId =>
                 entities[recipeId].isPublished === true
             );
+        } else if (props.tabKey === 'favorite') {
+            recipeIds = ids.filter(recipeId => {
+                const recipe = entities[recipeId];
+                if (isNotEmpty(recipe.favorites)) {
+                    const users = pluck('user', recipe?.favorites!);
+                    const usernames = pluck('username', users);
+                    return includes(username, usernames);
+                } else {
+                    return false;
+                }
+            });
         } else if (props.tabKey === 'unpublished') {
-            // recipeIds = [...ids];
             recipeIds = ids.filter(recipeId =>
                 entities[recipeId].isPublished === false
             );

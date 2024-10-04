@@ -18,6 +18,7 @@ import EditUserForm from './features/users/EditUserForm';
 import RequireEnv from './components/RequireEnv';
 import UnpublishedHome from './features/recipes/UnpublishedHome';
 import OwnerHome from './features/recipes/OwnerHome';
+import FavoriteHome from './features/recipes/FavoriteHome';
 
 const App = () => {
     useTitle('Recipe Finder');
@@ -78,6 +79,14 @@ const App = () => {
                             element={
                                 <AppLayout>
                                     <OwnerHome />
+                                </AppLayout>
+                            }
+                        />
+
+                        <Route path="favorite"
+                            element={
+                                <AppLayout>
+                                    <FavoriteHome />
                                 </AppLayout>
                             }
                         />

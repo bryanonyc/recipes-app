@@ -24,6 +24,10 @@ export const UserDropdown = () => {
             label: <Link to='/owner'>My Recipes</Link>,
         },
         {
+            key: 'favorite',
+            label: <Link to='/favorite'>My Favorite Recipes</Link>,
+        },
+        {
             key: 'uunpublished',
             label: <Link to='/unpublished'>Review Unpublished Recipes</Link>,
         },
@@ -63,6 +67,10 @@ export const UserDropdown = () => {
         {
             key: 'mine',
             label: <Link to='/owner'>My Recipes</Link>,
+        },
+        {
+            key: 'favorite',
+            label: <Link to='/favorite'>My Favorite Recipes</Link>,
         },
         {
             type: 'divider',

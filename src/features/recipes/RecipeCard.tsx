@@ -58,7 +58,7 @@ const RecipeCard = (props: Props) => {
     ];
 
     if (isNotEmpty(recipe?.favorites)) {
-        const users = pluck('user', recipe?.favorites!)
+        const users = pluck('user', recipe?.favorites!);
         const usernames = pluck('username', users);
 
         if (includes(username, usernames)) {
