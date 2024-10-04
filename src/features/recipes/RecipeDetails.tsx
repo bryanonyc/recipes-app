@@ -106,6 +106,13 @@ const RecipeDetails = () => {
         }
     };
 
+    let borderColor = `black`;
+    if (!recipe?.isPublished) {
+        borderColor = 'orange';
+    } else if (recipe?.author.username === username) {
+        borderColor = 'rgb(0, 200, 0)';
+    }
+
     let content;
 
     if (isNil(recipe)) {
@@ -114,7 +121,7 @@ const RecipeDetails = () => {
         content = <FORBIDDEN_403 extra={<Link to="/recipes">Back</Link>} />
     } else {
         content = (<>
-            <Card>
+            <Card style={{ border: `1px solid ${borderColor}` }}>
                 <Meta
                     title={recipe.title}
                     description={`Submitted by: ${getAuthorDisplayName()}.`}
