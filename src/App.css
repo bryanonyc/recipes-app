@@ -236,3 +236,7 @@ body {
 .logout-button {
   width: 100%;
 }
+
+.default-cursor {
+  cursor: default;
+}
