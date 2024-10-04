@@ -48,7 +48,13 @@ const RecipeCard = (props: Props) => {
         setOpen(false);
     };
 
-    const cardActions = [<InfoCircleOutlined key="info" onClick={handleOnInfoClick} color='green' />];
+    const cardActions = [
+        (
+            <Tooltip title='View Details' color='green'>
+                <InfoCircleOutlined key="info" onClick={handleOnInfoClick} />
+            </Tooltip>
+        ),
+    ];
 
     if (props.showDelete || recipe?.author.username === username) {
         cardActions.push(<DeleteOutlined key="delete" onClick={handleOnDeleteClick}/>);
