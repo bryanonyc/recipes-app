@@ -16,9 +16,7 @@ import UsersHome from './features/users/UsersHome';
 import RequireAuth from './features/auth/RequireAuth';
 import EditUserForm from './features/users/EditUserForm';
 import RequireEnv from './components/RequireEnv';
-import UnpublishedHome from './features/recipes/UnpublishedHome';
-import OwnerHome from './features/recipes/OwnerHome';
-import FavoriteHome from './features/recipes/FavoriteHome';
+import RecipeTab from './features/recipes/RecipeTab';
 
 const App = () => {
     useTitle('Recipe Finder');
@@ -78,7 +76,7 @@ const App = () => {
                         <Route path="owner"
                             element={
                                 <AppLayout>
-                                    <OwnerHome />
+                                    <RecipeTab tabKey='owner' tabLabel='My Recipes' />
                                 </AppLayout>
                             }
                         />
@@ -86,7 +84,7 @@ const App = () => {
                         <Route path="favorite"
                             element={
                                 <AppLayout>
-                                    <FavoriteHome />
+                                    <RecipeTab tabKey='favorite' tabLabel='My Favorites' />
                                 </AppLayout>
                             }
                         />
@@ -112,7 +110,7 @@ const App = () => {
                             <Route path="unpublished"
                                 element={
                                     <AppLayout>
-                                        <UnpublishedHome />
+                                        <RecipeTab tabKey='unpublished' tabLabel='Unpublished' />
                                     </AppLayout>
                                 }
                             />

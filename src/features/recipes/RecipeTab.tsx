@@ -4,7 +4,12 @@ import RecipeList from './RecipeList';
 import { useGetRecipesQuery } from './recipesApiSlice';
 import { ArrowLeftOutlined } from '@ant-design/icons';
 
-const OwnerHome = () => {
+interface Props {
+    tabKey: string,
+    tabLabel: string
+}
+
+const RecipeTab = (props: Props) => {
     const { data, isSuccess, isLoading, error } = useGetRecipesQuery({});
 
     const navigate = useNavigate();
@@ -23,13 +28,13 @@ const OwnerHome = () => {
 
     const items: TabsProps['items'] = [
         {
-            key: 'owner',
-            label: 'My Recipes',
-            children: ( <RecipeList tabKey='owner' data={data} isSuccess={isSuccess} isLoading={isLoading} error={error} />)
+            key: props.tabKey,
+            label: props.tabLabel,
+            children: ( <RecipeList tabKey={props.tabKey} data={data} isSuccess={isSuccess} isLoading={isLoading} error={error} />)
         }
     ];
 
     return <Tabs tabBarExtraContent={backToRecipes} items={items} />;
 }
 
-export default OwnerHome;
+export default RecipeTab;
