@@ -1,8 +1,8 @@
 
-import { Button, Layout } from 'antd';
+import { Flex, Layout } from 'antd';
 import { ReactNode } from 'react';
 import { UserDropdown } from './UserDropdown';
-import { useNavigate } from 'react-router-dom';
+import SearchRecipes from '../features/recipes/SearchRecipes';
 
 const { Header, Content, Footer } = Layout;
 interface Props {
@@ -10,18 +10,14 @@ interface Props {
 }
 
 const AppLayout = (props: Props) => {
-    const navigate = useNavigate();
-
-    const gotoNewRecipe = () => {
-        navigate('/recipes/new');
-    };
-
     return (
         <div className='app-layout-container'>
             <Layout className='app-layout'>
                 <Header className='app-layout-header'>
-                    <Button type='primary' onClick={gotoNewRecipe}>Submit New Recipe</Button>
-                    <UserDropdown />
+                    <Flex align='center' justify='space-between'>
+                        <SearchRecipes />
+                        <UserDropdown />
+                    </Flex>
                 </Header>
                 <Content>
                 <div className='app-layout-content-container'>

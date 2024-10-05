@@ -1,14 +1,17 @@
-import { Tabs, TabsProps } from 'antd';
+import { Button, Tabs, TabsProps, Tooltip } from 'antd';
 import RecipeList from './RecipeList';
 import { useMemo } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useGetRecipesQuery } from './recipesApiSlice';
 import StickyBox from 'react-sticky-box';
-import SearchRecipes, { buildQueryParamMap, buildQueryParams} from './SearchRecipes';
+import { buildQueryParamMap, buildQueryParams} from './SearchRecipes';
+import { PlusOutlined } from '@ant-design/icons';
 
 let pollInterval = process.env.POLLING_INTERVAL ? Number(process.env.POLLING_INTERVA) : Number(process.env.REACT_APP_POLLING_INTERVAL);
 
 const RecipesHome = () => {
+    const navigate = useNavigate();
+
     if (isNaN(pollInterval)) {
       pollInterval = 0;
     }
@@ -32,7 +35,17 @@ const RecipesHome = () => {
     // Comment below for polling
     // const { data, isSuccess, error } = useGetRecipesQuery(buildQueryString);
 
-    const extraContent = <SearchRecipes />;
+    const gotoNewRecipe = () => {
+        navigate('/recipes/new');
+    };
+
+    const extraContent = (
+        <Tooltip title='Submit a new recipe' color='blue' placement='left'>
+            <Button type='primary' onClick={gotoNewRecipe}>
+                <PlusOutlined/>
+            </Button>
+        </Tooltip>
+    )
 
     const items: TabsProps['items'] = [
         {
