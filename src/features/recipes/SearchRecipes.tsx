@@ -51,6 +51,7 @@ const SearchRecipes = () => {
 
     return (
         <Search
+            style={{ width: '175px' }}
             placeholder="Search recipes"
             onChange={(e) => setSearchText(e.target.value)}
             onSearch={doSearch}
