@@ -30,6 +30,8 @@ const Register = () => {
 
     const content = (
         <>
+            <h1>Recipe Finder App</h1>
+
             {
                 errMsg &&
                 <div className='auth-error'>

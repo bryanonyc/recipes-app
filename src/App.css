@@ -68,7 +68,7 @@ body {
 .login-form, .register-form {
   display: flex;
   flex-direction: column;
-  padding: 10% 5%;
+  padding: 6% 8%;
   border: 1px solid black;
 }
 
