@@ -69,12 +69,14 @@ const Login = () => {
                         <Input.Password />
                 </Form.Item>
 
-                <Checkbox
-                    onChange={handleToggle}
-                    checked={persist}
-                >
-                    Trust This Device
-                </Checkbox>
+                <Form.Item>
+                    <Checkbox
+                        onChange={handleToggle}
+                        checked={persist}
+                    >
+                        Trust This Device
+                    </Checkbox>
+                </Form.Item>
 
                 <Button type="primary" htmlType="submit">
                     Login
