@@ -1,7 +1,8 @@
 import { useNavigate } from 'react-router-dom';
-import { Button, TabsProps, Tabs } from 'antd';
+import { Button, TabsProps, Tabs, Tooltip } from 'antd';
 import RecipeList from './RecipeList';
 import { useGetRecipesQuery } from './recipesApiSlice';
+import { ArrowLeftOutlined } from '@ant-design/icons';
 
 const UnpublishedHome = () => {
     const { data, isSuccess, isLoading, error } = useGetRecipesQuery({});
@@ -12,12 +13,18 @@ const UnpublishedHome = () => {
         navigate('/recipes');
     };
 
-    const backToRecipes = <Button type='primary' onClick={gotoRecipes}>Published Recipes</Button>;
+    const backToRecipes = (
+        <Tooltip title='Back to published recipes' color='blue' placement='left'>
+            <Button type='primary' onClick={gotoRecipes}>
+                <ArrowLeftOutlined/>
+            </Button>
+        </Tooltip>
+    );
 
     const items: TabsProps['items'] = [
         {
             key: 'unpublished',
-            label: 'Unpublished Recipes',
+            label: 'Unpublished',
             children: ( <RecipeList tabKey='unpublished' data={data} isSuccess={isSuccess} isLoading={isLoading} error={error} />)
         }
     ];
