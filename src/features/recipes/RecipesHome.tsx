@@ -1,16 +1,10 @@
-import { Input, Tabs, TabsProps } from 'antd';
+import { Tabs, TabsProps } from 'antd';
 import RecipeList from './RecipeList';
-import { useMemo, useState } from 'react';
-import { isNil, isNotEmpty, isNotNil } from 'ramda';
-import { createSearchParams, useNavigate, useSearchParams } from 'react-router-dom';
+import { useMemo } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { useGetRecipesQuery } from './recipesApiSlice';
 import StickyBox from 'react-sticky-box';
-
-const { Search } = Input;
-
-interface StringMap {
-    [key: string]: string;
-}
+import SearchRecipes, { buildQueryParamMap, buildQueryParams} from './SearchRecipes';
 
 let pollInterval = process.env.POLLING_INTERVAL ? Number(process.env.POLLING_INTERVA) : Number(process.env.REACT_APP_POLLING_INTERVAL);
 
@@ -19,39 +13,17 @@ const RecipesHome = () => {
       pollInterval = 0;
     }
 
-    const [searchText, setSearchText] = useState('');
-    const navigate = useNavigate();
     const [urlSearchParams] = useSearchParams();
-
-    const buildQueryParamMap = (searchParams: URLSearchParams) => {
-        const params: StringMap = {};
-        searchParams.forEach((value, key) => {
-            if (isNotEmpty(value) && isNotNil(value)) {
-                params[key] = value;
-            }
-        });
-        return params;
-    }
-
-    const buildQueryParams = (paramMap: StringMap) => {
-        if (isNil(paramMap['search'])) {
-            return {};
-        }
-
-        return {
-            search: paramMap['search']
-        }
-    }
 
     const queryParamMap = buildQueryParamMap(urlSearchParams);
 
-    const buildQueryString = useMemo(
+    const queryString = useMemo(
         () => buildQueryParams(queryParamMap),
         [queryParamMap]
     );
 
     // Uncomment below for polling
-    const { data, isSuccess, error, isLoading } = useGetRecipesQuery(buildQueryString, {
+    const { data, isSuccess, error, isLoading } = useGetRecipesQuery(queryString, {
         pollingInterval: pollInterval,
         refetchOnFocus: true,
         refetchOnMountOrArgChange: true
@@ -60,30 +32,7 @@ const RecipesHome = () => {
     // Comment below for polling
     // const { data, isSuccess, error } = useGetRecipesQuery(buildQueryString);
 
-    const doSearch = async () => {
-        const queryObject = {
-            pathname: '/recipes',
-            search: createSearchParams({}).toString()
-        };
-
-        if (isNotEmpty(searchText) && isNotNil(searchText)) {
-            queryObject.search = createSearchParams({ search: searchText }).toString()
-        }
-
-        navigate(queryObject);
-    };
-
-    const initialSearchTerm = isNotNil(urlSearchParams.get('search')) ? urlSearchParams.get('search') : '';
-
-    const extraContent = (
-        <Search
-            placeholder="Search recipes"
-            onChange={(e) => setSearchText(e.target.value)}
-            onSearch={doSearch}
-            defaultValue={initialSearchTerm!}
-            enterButton
-        />
-    )
+    const extraContent = <SearchRecipes />;
 
     const items: TabsProps['items'] = [
         {
