@@ -1,8 +1,8 @@
 import { useNavigate } from 'react-router-dom';
-import { Button, TabsProps, Tabs, Tooltip } from 'antd';
+import { Button, TabsProps, Tabs, Tooltip, Space } from 'antd';
 import RecipeList from './RecipeList';
 import { useGetRecipesQuery } from './recipesApiSlice';
-import { ArrowLeftOutlined } from '@ant-design/icons';
+import { ArrowLeftOutlined, PlusOutlined } from '@ant-design/icons';
 
 interface Props {
     tabKey: string,
@@ -14,16 +14,29 @@ const RecipeTab = (props: Props) => {
 
     const navigate = useNavigate();
 
-    const gotoRecipes = () => {
-        navigate('/recipes');
+    const goToPrevious = () => {
+        navigate(-1);
+    };
+
+    const gotoNewRecipe = () => {
+        navigate('/recipes/new');
     };
 
     const backToRecipes = (
+    <>
+        <Space>
         <Tooltip title='Back to published recipes' color='blue' placement='left'>
-            <Button type='primary' onClick={gotoRecipes}>
+            <Button type='primary' onClick={goToPrevious}>
                 <ArrowLeftOutlined/>
             </Button>
         </Tooltip>
+        <Tooltip title='Submit a new recipe' color='blue' placement='bottom'>
+            <Button type='primary' onClick={gotoNewRecipe}>
+                <PlusOutlined/>
+            </Button>
+        </Tooltip>
+        </Space>
+    </>
     );
 
     const items: TabsProps['items'] = [
