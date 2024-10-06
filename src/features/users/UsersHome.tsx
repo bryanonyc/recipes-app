@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom';
-import { Button, TabsProps, Tabs } from 'antd';
+import { Button, TabsProps, Tabs, Tooltip } from 'antd';
 import UsersList from './UsersList';
+import { ArrowLeftOutlined } from '@ant-design/icons';
 
 const UsersHome = () => {
     const navigate = useNavigate();
@@ -9,7 +10,13 @@ const UsersHome = () => {
         navigate('/recipes');
     };
 
-    const backToRecipes = <Button type='primary' onClick={gotoRecipes}>Back To Recipes</Button>;
+    const backToRecipes = (
+        <Tooltip title='Back to published recipes' color='blue' placement='left'>
+            <Button type='primary' onClick={gotoRecipes}>
+                <ArrowLeftOutlined/>
+            </Button>
+        </Tooltip>
+    )
 
     const items: TabsProps['items'] = [
         {
