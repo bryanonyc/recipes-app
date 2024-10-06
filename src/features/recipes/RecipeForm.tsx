@@ -2,7 +2,6 @@ import { Button, Form, FormInstance, Input, InputNumber } from 'antd';
 import { Recipe } from '../../models/recipe';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { isNil } from 'ramda';
 
 const { TextArea } = Input;
 
