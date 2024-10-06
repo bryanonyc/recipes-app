@@ -28,6 +28,10 @@ const Register = () => {
         navigate("/login");
     };
 
+    const gotoWelcome = () => {
+        navigate("/");
+    };
+
     const content = (
         <>
             <h1>Recipe Finder App</h1>
@@ -74,6 +78,9 @@ const Register = () => {
             </Form>
             <Button className='link-button' type="link" onClick={gotoLogin}>
                 Already have an account?  Login here.
+            </Button>
+            <Button className='link-button' type="link" onClick={gotoWelcome}>
+                Or, back to the Welcome page.
             </Button>
         </>
     );

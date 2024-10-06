@@ -24,6 +24,10 @@ const Login = () => {
         navigate("/register");
     };
 
+    const gotoWelcome = () => {
+        navigate("/");
+    };
+
     const handleSubmit = async (values: LoginCredentials) => {
         try {
             const { accessToken } = await login(values).unwrap();
@@ -87,6 +91,10 @@ const Login = () => {
 
             <Button className='link-button' type="link" onClick={gotoRegister}>
                 No account?  Register here.
+            </Button>
+
+            <Button className='link-button' type="link" onClick={gotoWelcome}>
+                Or, back to the Welcome page.
             </Button>
         </>
     );
