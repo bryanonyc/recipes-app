@@ -97,11 +97,10 @@ body {
 }
 
 .app-title {
-  float: left;
-}
-
-.app-title h1 {
-  margin: 0 0;
+  font-size: 1.125rem;
+  font-style: italic;
+  font-weight: bold;
+  color: white;
 }
 
 .user-menu {
@@ -204,7 +203,9 @@ body {
   /* display: flex; */
   /* align-items: center; */
   /* justify-content: space-between; */
-  background: linear-gradient(45deg, black, white);
+  /* background: linear-gradient(45deg, black, white); */
+  background-color: black;
+  color: white;
 }
 
 .app-layout-content-container {
@@ -215,7 +216,9 @@ body {
 
 .app-layout-footer {
   text-align: center;
-  background: linear-gradient(45deg, black, white);
+  /* background: linear-gradient(45deg, black, white); */
+  background-color: black;
+  color: white;
 }
 
 .owner-card {

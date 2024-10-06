@@ -1,10 +1,10 @@
-
 import { Flex, Layout } from 'antd';
 import { ReactNode } from 'react';
 import { UserDropdown } from './UserDropdown';
 import SearchRecipes from '../features/recipes/SearchRecipes';
 
 const { Header, Content, Footer } = Layout;
+
 interface Props {
     children: ReactNode;
 }
@@ -16,6 +16,7 @@ const AppLayout = (props: Props) => {
                 <Header className='app-layout-header'>
                     <Flex align='center' justify='space-between'>
                         <SearchRecipes />
+                        <div className='app-title'>Recipe Finder</div>
                         <UserDropdown />
                     </Flex>
                 </Header>
