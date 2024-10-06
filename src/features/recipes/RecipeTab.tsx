@@ -14,8 +14,8 @@ const RecipeTab = (props: Props) => {
 
     const navigate = useNavigate();
 
-    const goToPrevious = () => {
-        navigate(-1);
+    const goToRecipes = () => {
+        navigate('/recipes');
     };
 
     const gotoNewRecipe = () => {
@@ -26,7 +26,7 @@ const RecipeTab = (props: Props) => {
     <>
         <Space>
         <Tooltip title='Back to published recipes' color='blue' placement='left'>
-            <Button type='primary' onClick={goToPrevious}>
+            <Button type='primary' onClick={goToRecipes}>
                 <ArrowLeftOutlined/>
             </Button>
         </Tooltip>
