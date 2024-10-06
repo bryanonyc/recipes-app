@@ -251,3 +251,9 @@ body {
 .default-cursor {
   cursor: default;
 }
+
+.demo-warning {
+  margin-bottom: 1rem;
+  display: flex;
+  justify-content: center;
+}

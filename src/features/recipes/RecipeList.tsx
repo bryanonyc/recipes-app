@@ -37,6 +37,7 @@ const RecipeList = (props: Props) => {
     }
 
     let emptyDescription;
+    let warningContent;
     if (props.isSuccess) {
         const { ids, entities } = props.data!;
 
@@ -50,6 +51,11 @@ const RecipeList = (props: Props) => {
 
         if (props.tabKey === 'owner') {
             emptyDescription = 'You have not submitted any recipes.';
+            warningContent = (
+                <div className='demo-warning'>
+                    <Alert type='warning' message='You are in demo mode.  Any submitted recipes will be deleted once you log out.' />
+                </div>
+            )
             recipeIds = ids.filter(recipeId =>
                 entities[recipeId].author?.username === username
             );
@@ -59,6 +65,11 @@ const RecipeList = (props: Props) => {
             );
         } else if (props.tabKey === 'favorite') {
             emptyDescription = 'You have no favorite recipes.';
+            warningContent = (
+                <div className='demo-warning'>
+                    <Alert className='demo-warning' type='warning' message='You are in demo mode.  Any favorite recipes will be deleted once you log out.' />
+                </div>
+            )
             recipeIds = ids.filter(recipeId => {
                 const recipe = entities[recipeId];
                 return isUserFavorite(recipe.favorites, username);
@@ -89,7 +100,7 @@ const RecipeList = (props: Props) => {
         }
     }
 
-    let errorContent
+    let errorContent;
     if (props.error) {
         content = <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
         if ('status' in props.error) {
@@ -107,6 +118,7 @@ const RecipeList = (props: Props) => {
     return (
         <>
             { props.error && errorContent }
+            { username === 'demo' && warningContent}
             { content }
         </>
     );
