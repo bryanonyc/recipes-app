@@ -60,6 +60,14 @@ const Welcome = () => {
             </div>
             <div className={'home-button-container'}>
                 <Space>
+                    <Button
+                        type='primary'
+                        onClick={loginAsDemoUser}
+                        disabled={loggedIn}
+                        style={{ backgroundColor: 'green' }}
+                    >
+                        Demo Mode
+                    </Button>
                     { nonRegisterButtonContent }
                     <Button
                         type='primary'
@@ -67,13 +75,6 @@ const Welcome = () => {
                         disabled={loggedIn}
                     >
                         Register
-                    </Button>
-                    <Button
-                        type='primary'
-                        onClick={loginAsDemoUser}
-                        disabled={loggedIn}
-                    >
-                        Demo Mode
                     </Button>
                 </Space>
 
