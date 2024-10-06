@@ -36,6 +36,7 @@ const RecipeList = (props: Props) => {
         )
     }
 
+    let emptyDescription;
     if (props.isSuccess) {
         const { ids, entities } = props.data!;
 
@@ -48,6 +49,7 @@ const RecipeList = (props: Props) => {
         }
 
         if (props.tabKey === 'owner') {
+            emptyDescription = 'You have not submitted any recipes.';
             recipeIds = ids.filter(recipeId =>
                 entities[recipeId].author?.username === username
             );
@@ -56,6 +58,7 @@ const RecipeList = (props: Props) => {
                 entities[recipeId].isPublished === true
             );
         } else if (props.tabKey === 'favorite') {
+            emptyDescription = 'You have no favorite recipes.';
             recipeIds = ids.filter(recipeId => {
                 const recipe = entities[recipeId];
                 return isUserFavorite(recipe.favorites, username);
@@ -81,7 +84,8 @@ const RecipeList = (props: Props) => {
                 </>
             )
         } else {
-            content = <Empty />
+
+            content = <Empty description={emptyDescription} />
         }
     }
 
