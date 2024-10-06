@@ -53,7 +53,7 @@ const RecipeList = (props: Props) => {
             emptyDescription = 'You have not submitted any recipes.';
             warningContent = (
                 <div className='demo-warning'>
-                    <Alert type='warning' message='You are in demo mode.  Any submitted recipes will be deleted once you log out.' />
+                    <Alert showIcon={true} type='warning' message='You are in demo mode.  Any submitted recipes will be deleted once you log out.' />
                 </div>
             )
             recipeIds = ids.filter(recipeId =>
@@ -67,7 +67,7 @@ const RecipeList = (props: Props) => {
             emptyDescription = 'You have no favorite recipes.';
             warningContent = (
                 <div className='demo-warning'>
-                    <Alert className='demo-warning' type='warning' message='You are in demo mode.  Any favorite recipes will be deleted once you log out.' />
+                    <Alert showIcon={true} className='demo-warning' type='warning' message='You are in demo mode.  Any favorite recipes will be deleted once you log out.' />
                 </div>
             )
             recipeIds = ids.filter(recipeId => {
