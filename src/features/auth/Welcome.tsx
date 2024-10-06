@@ -45,6 +45,19 @@ const Welcome = () => {
             <div className={'title-container'}>
                 <div>Welcome!</div>
             </div>
+            <div className={'body-container'}>
+                <p>This application is built using the following:</p>
+
+                <Button type="link" href='https://react.dev/' target='_'>React</Button>
+                <Button type="link" href='https://redux-toolkit.js.org/' target='_'>Redux Toolkit</Button>
+                <Button type="link" href='https://ant.design/' target='_'>Ant Design</Button>
+                <Button type="link" href='https://nodejs.org/en' target='_'>Node.js</Button>
+                <Button type="link" href='https://expressjs.com/' target='_'>Express</Button>
+                <Button type="link" href='https://www.prisma.io/' target='_'>Prisma</Button>
+                <Button type="link" href='https://www.postgresql.org/' target='_'>Postgres</Button>
+
+                <p>Login / Register or click the Demo Mode button below to see the app in action.</p>
+            </div>
             <div className={'home-button-container'}>
                 <Space>
                     { nonRegisterButtonContent }
