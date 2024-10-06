@@ -60,7 +60,10 @@ const NewRecipeForm = () => {
         <>
             <Card
                 title="Recipe Submission"
-                style={{ width: '100%' }}
+                style={{
+                    border: '1px solid black',
+                    width: '100%'
+                }}
             >
                 <RecipeForm handleSubmit={handleSubmit} form={form} />
             </Card>
