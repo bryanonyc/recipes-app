@@ -1,13 +1,14 @@
 import { useEffect }  from 'react';
 import { useNavigate } from 'react-router-dom';
-import { message, Button } from 'antd';
+import { Button, App } from 'antd';
 import { useSendLogoutMutation } from './authApiSlice';
 import { useAppDispatch } from '../../app/hooks';
 import { apiSlice } from "../../app/api/apiSlice";
 import { logOut } from "./authSlice";
+import { getErrorMessage } from '../../components/Errors';
 
 const LogoutButton = () => {
-    const [messageApi, contextHolder] = message.useMessage();
+    const { message: antdMessage }= App.useApp();
 
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
@@ -23,25 +24,12 @@ const LogoutButton = () => {
             dispatch(apiSlice.util.resetApiState());
             navigate('/login');
         } else if (error) {
-            let errorMessage = 'Logout Error';
-            // if ('status' in error) {
-            //     errorMessage += ` : ${error.message}`;
-            // }
-            messageApi.open({
-                type: 'error',
-                content: errorMessage,
-                duration: 0,
-              });
-
-            setTimeout(() => {
-                messageApi.destroy();
-              }, 2000);
+            antdMessage.error(getErrorMessage(error), 10);
         }
-    }, [isSuccess, error, dispatch, navigate, messageApi]);
+    }, [isSuccess, error, dispatch, navigate, antdMessage]);
 
     return (
         <>
-        { contextHolder }
         <Button
             type="primary"
             size='small'
