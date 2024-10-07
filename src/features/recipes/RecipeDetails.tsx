@@ -18,9 +18,9 @@ const RecipeDetails = () => {
     const recipe = useAppSelector(state => selectRecipesById(state, Number(id)));
 
     const { message: antdMessage } = App.useApp();
-    const [publishRecipe] = usePublishRecipeMutation();
-    const [addFavorite] = useAddFavoriteMutation();
-    const [deleteFavorite] = useDeleteFavoriteMutation();
+    const [publishRecipe, { isLoading: publishIsLoading }] = usePublishRecipeMutation();
+    const [addFavorite, { isLoading: addFavoriteIsLoading }] = useAddFavoriteMutation();
+    const [deleteFavorite, { isLoading: deleteFavoriteIsLoading }] = useDeleteFavoriteMutation();
 
     const handleCancel = () => {
         navigate(-1);
@@ -140,26 +140,26 @@ const RecipeDetails = () => {
             </Card>
             <Space>
                 { isAdmin && !recipe.isPublished &&
-                    <Button type="primary" onClick={handlePublish}>
+                    <Button type="primary" onClick={handlePublish} disabled={publishIsLoading || addFavoriteIsLoading || deleteFavoriteIsLoading}>
                         Publish
                     </Button>
                 }
                 { !isUserFavorite(recipe.favorites, username) &&
-                    <Button type="primary" onClick={handleAddFavorite}>
+                    <Button type="primary" onClick={handleAddFavorite} disabled={publishIsLoading || addFavoriteIsLoading || deleteFavoriteIsLoading}>
                         Add Favorite
                     </Button>
                 }
                 { isUserFavorite(recipe.favorites, username) &&
-                    <Button type="primary" onClick={handleDeleteFavorte}>
+                    <Button type="primary" onClick={handleDeleteFavorte} disabled={publishIsLoading || addFavoriteIsLoading || deleteFavoriteIsLoading}>
                         Remove Favorite
                     </Button>
                 }
                 { isAuthor &&
-                    <Button type="primary" onClick={handleEdit}>
+                    <Button type="primary" onClick={handleEdit} disabled={publishIsLoading || addFavoriteIsLoading || deleteFavoriteIsLoading}>
                         Edit
                     </Button>
                 }
-                <Button onClick={handleCancel}>
+                <Button onClick={handleCancel} disabled={publishIsLoading || addFavoriteIsLoading || deleteFavoriteIsLoading}>
                     Cancel
                 </Button>
             </Space>

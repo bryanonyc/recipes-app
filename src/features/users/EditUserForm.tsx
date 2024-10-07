@@ -19,7 +19,7 @@ const EditUserForm = () => {
     });
     const [form] = Form.useForm();
     const { message: antdMessage } = App.useApp();
-    const[updateUser] = useUpdateUserMutation();
+    const[updateUser, { isLoading }] = useUpdateUserMutation();
 
     const handleSubmit = async (values: FormData) => {
         const isAdmin = isNotNil(values.isAdmin) ? values.isAdmin : user?.isAdmin;
@@ -71,10 +71,10 @@ const EditUserForm = () => {
                         <Checkbox defaultChecked={user?.isActive} />
                     </Form.Item>
                     <div className='submit-button-container'>
-                        <Button type="primary" htmlType="submit">
+                        <Button type="primary" htmlType="submit" disabled={isLoading}>
                             Submit
                         </Button>
-                        <Button onClick={handleCancel}>
+                        <Button onClick={handleCancel} disabled={isLoading}>
                             Cancel
                         </Button>
                     </div>
