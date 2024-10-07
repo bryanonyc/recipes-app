@@ -38,9 +38,9 @@ const RecipeCard = (props: Props) => {
 
     const handleModalConfirm = async () => {
         try {
+            setOpen(false);
             await deleteRecipe({ id: recipe?.id }).unwrap();
             antdMessage.success('Recipe deleted successfully.', 5);
-            setOpen(false);
         } catch (err: any) {
             antdMessage.error(getErrorMessage(err), 10);
         }
