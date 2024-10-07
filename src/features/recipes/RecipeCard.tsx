@@ -25,7 +25,7 @@ const RecipeCard = (props: Props) => {
 
     const [open, setOpen] = useState(false);
 
-    const [deleteRecipe] = useDeleteRecipeMutation();
+    const [deleteRecipe, { isLoading }] = useDeleteRecipeMutation();
     const { message: antdMessage }= App.useApp();
 
     const handleOnInfoClick = () => {
@@ -38,9 +38,9 @@ const RecipeCard = (props: Props) => {
 
     const handleModalConfirm = async () => {
         try {
-            setOpen(false);
             await deleteRecipe({ id: recipe?.id }).unwrap();
             antdMessage.success('Recipe deleted successfully.', 5);
+            setOpen(false);
         } catch (err: any) {
             antdMessage.error(getErrorMessage(err), 10);
         }
@@ -108,7 +108,9 @@ const RecipeCard = (props: Props) => {
             title={`Delete ${recipe?.title}`}
             open={open}
             onOk={handleModalConfirm}
+            okButtonProps={{ disabled: isLoading }}
             onCancel={handleModalCancel}
+            cancelButtonProps={{ disabled: isLoading }}
         >
             <p>Would you like to delete this recipe?</p>
         </Modal>
