@@ -77,7 +77,8 @@ const RecipeDetails = () => {
         }
     };
 
-    const isAuthor = isNotNil(recipe.author) ? username === recipe.author?.username : false;
+
+    const isAuthor = isNotNil(recipe?.author) ? username === recipe.author?.username : false;
 
     const getAuthorDisplayName = () => {
         let displayName = 'Unknown';
