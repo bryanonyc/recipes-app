@@ -1,4 +1,4 @@
-import { Button, Space } from 'antd';
+import { App, Button, Space } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import { useAppSelector } from '../../app/hooks';
 import { isNotNil } from 'ramda';
@@ -8,11 +8,13 @@ import { useAuth } from '../../hooks/useAuth';
 import { useDemoLoginMutation } from './authApiSlice';
 import { useAppDispatch } from '../../app/hooks';
 import '../../App.css';
+import { getErrorMessage } from '../../components/Errors';
 
 const Welcome = () => {
+    const { message: antdMessage } = App.useApp()
     const accessToken = useAppSelector(selectCurrentToken);
     const dispatch = useAppDispatch();
-    const [demoLogin] = useDemoLoginMutation();
+    const [demoLogin, { isLoading }] = useDemoLoginMutation();
     const { username, name } = useAuth();
 
     const loggedIn = [accessToken, username, name].every(isNotNil)
@@ -31,13 +33,18 @@ const Welcome = () => {
     if (loggedIn) {
         nonRegisterButtonContent = <LogoutButton />
     } else {
-        nonRegisterButtonContent = <Button type='primary' onClick={gotoLogin}>Log In</Button>
+        nonRegisterButtonContent = <Button type='primary' onClick={gotoLogin} disabled={isLoading}>Log In</Button>
     }
 
     const loginAsDemoUser = async () => {
-        const { accessToken } = await demoLogin(null).unwrap();
-        dispatch(setCredentials( { accessToken }));
-        navigate("/recipes");
+        try {
+            const { accessToken } = await demoLogin(null).unwrap();
+            dispatch(setCredentials( { accessToken }));
+            navigate("/recipes");
+        } catch (error) {
+            const errorMsg = getErrorMessage(error);
+            antdMessage.error(errorMsg, 5);
+        }
     }
 
     return (
@@ -63,7 +70,7 @@ const Welcome = () => {
                     <Button
                         type='primary'
                         onClick={loginAsDemoUser}
-                        disabled={loggedIn}
+                        disabled={loggedIn || isLoading}
                         style={{ backgroundColor: 'green' }}
                     >
                         Demo Mode
@@ -72,7 +79,7 @@ const Welcome = () => {
                     <Button
                         type='primary'
                         onClick={gotoRegister}
-                        disabled={loggedIn}
+                        disabled={loggedIn || isLoading}
                     >
                         Register
                     </Button>
