@@ -112,6 +112,15 @@ body {
   }
 }
 
+@media screen and (min-width: 600px) {
+  .app-title {
+    font-size: 1.125rem;
+    font-style: italic;
+    font-weight: bold;
+    color: white;
+  }
+}
+
 .user-menu {
   cursor: pointer;
   float: right;
