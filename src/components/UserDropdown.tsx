@@ -1,4 +1,4 @@
-import { Dropdown, Space } from 'antd';
+import { Avatar, Dropdown, Space } from 'antd';
 import { MenuOutlined } from '@ant-design/icons';
 import { useAuth } from '../hooks/useAuth';
 
@@ -10,7 +10,21 @@ import { Link } from 'react-router-dom';
 export const UserDropdown = () => {
     const { name, isAdmin } = useAuth();
 
+    const userAvatar = (
+        <Avatar style={{ backgroundColor: "#f56a00" }} size="small">
+            {name.charAt(0)}
+        </Avatar>
+    );
+
     const adminItems: MenuProps['items'] = [
+        {
+            key: 'name',
+            label: (<>{userAvatar} {name}</>),
+            disabled: true,
+        },
+        {
+            type: 'divider',
+        },
         {
             key: 'recipes',
             label: 'Recipes',
@@ -57,6 +71,14 @@ export const UserDropdown = () => {
 
     const nonAdminItems: MenuProps['items'] = [
         {
+            key: 'name',
+            label: (<>{userAvatar} {name}</>),
+            disabled: true,
+        },
+        {
+            type: 'divider',
+        },
+        {
             key: 'recipes',
             label: 'Recipes',
             disabled: true,
@@ -85,7 +107,7 @@ export const UserDropdown = () => {
 
     return (
         <Space>
-            { name }
+            {userAvatar}
             <Dropdown menu={{ items }} arrow placement='bottom'>
                 <MenuOutlined style={{ cursor: 'pointer' }} />
             </Dropdown>
