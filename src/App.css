@@ -74,7 +74,7 @@ body {
 .register-form {
   display: flex;
   flex-direction: column;
-  padding: 6% 8%;
+  padding: 6% 4%;
   border: 1px solid black;
 }
 
@@ -133,6 +133,12 @@ body {
   align-items: center;
   justify-content: center;
 }
+
+.weloome-helper-text {
+  font-size: 16pt;
+  padding-left: 25px;
+}
+
 
 .recipe-details-container {
   display: flex;
