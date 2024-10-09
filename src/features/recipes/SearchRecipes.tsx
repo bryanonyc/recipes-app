@@ -51,8 +51,8 @@ const SearchRecipes = () => {
 
     return (
         <Search
-            style={{ width: '175px' }}
-            placeholder="Search recipes"
+            className='search-input'
+            placeholder="Search "
             onChange={(e) => setSearchText(e.target.value)}
             onSearch={doSearch}
             defaultValue={initialSearchTerm!}
