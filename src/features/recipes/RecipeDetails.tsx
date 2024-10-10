@@ -107,11 +107,11 @@ const RecipeDetails = () => {
         }
     };
 
-    let borderColor = `black`;
+    let cardClass = 'card-details-default';
     if (!recipe?.isPublished) {
-        borderColor = 'orange';
+        cardClass = 'card-details-not-published';
     } else if (recipe?.author.username === username) {
-        borderColor = 'rgb(0, 200, 0)';
+        cardClass = 'card-details-owner';
     }
 
     let content;
@@ -122,9 +122,9 @@ const RecipeDetails = () => {
         content = <FORBIDDEN_403 extra={<Link to="/recipes">Back</Link>} />
     } else {
         content = (<>
-            <Card style={{ border: `1px solid ${borderColor}` }}>
+            <Card className={cardClass}>
                 <Meta
-                    title={recipe.title}
+                    title={<span style={{ textWrap: 'pretty' }}>{recipe.title}</span>}
                     description={`Submitted by: ${getAuthorDisplayName()}.`}
                     style={{ paddingBottom: '1rem'}}
                 />

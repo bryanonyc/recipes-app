@@ -110,6 +110,21 @@ body {
     color: white;
     display: none;
   }
+
+  .card-details-default {
+    border: 1px solid black;
+    width: 350px;
+  }
+
+  .card-details-not-published {
+    border: 1px solid orange;
+    width: 350px;
+  }
+
+  .card-details-owner {
+    border: 1px solid rgb(0, 200, 0);
+    width: 350px;
+  }
 }
 
 @media screen and (min-width: 600px) {
@@ -118,6 +133,18 @@ body {
     font-style: italic;
     font-weight: bold;
     color: white;
+  }
+
+  .card-details-default {
+    border: 1px solid black;
+  }
+
+  .card-details-not-published {
+    border: 1px solid orange;
+  }
+
+  .card-details-owner {
+    border: 1px solid rgb(0, 200, 0);
   }
 }
 
