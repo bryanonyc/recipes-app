@@ -274,10 +274,11 @@ body {
   /* background: linear-gradient(45deg, black, white); */
   background-color: black;
   color: white;
+  padding: 0 15px;
 }
 
 .app-layout-content-container {
-  padding: .5rem 3rem;
+  padding: .5rem 1rem;
   background: '#ccc';
   border-radius: 0;
 }
