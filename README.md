@@ -1,46 +1,20 @@
-# Getting Started with Create React App
+# Recipe Finder
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Recipe Finder is a project I created to search recipes that users have submitted.  You can access the app as a guest or as a registered user.  Registered users can view, submit, and favorite recipes.  Administorators can review recipes submitted by users and approve the recipe for publishing.  They can also manage users.
 
-## Available Scripts
+The project is divided into two main components: Backend and Frontend.
 
-In the project directory, you can run:
+You can access the app [here.](https://bryano-recipe-finder.onrender.com/)
 
-### `npm start`
+## Features
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+- **Backend**: A Node.js applicaiton that exposes an API endpoint to serve the data to the Frontend.  Also leverages Express and Prisma to query the database.
+- **Database**: A Postgres database.
+- **Frontend**: A React application leveraing React, Redux Toolkit, and Ant Design.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## Screenshots
+<img width="1503" alt="Screenshot 2025-01-23 at 3 09 42 PM" src="https://github.com/user-attachments/assets/5f0b94e3-9fbb-40c9-8057-996c8e28e977" />
 
-### `npm test`
+<img width="1502" alt="Screenshot 2025-01-23 at 3 08 53 PM" src="https://github.com/user-attachments/assets/cd94c0d3-078f-46a2-8950-73783ac12f9b" />
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+<img width="1507" alt="Screenshot 2025-01-23 at 3 09 21 PM" src="https://github.com/user-attachments/assets/f8530cbf-27fa-45ce-81d3-a722b1e5b1b5" />
