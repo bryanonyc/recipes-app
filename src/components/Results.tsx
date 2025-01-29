@@ -42,8 +42,9 @@ export const ENVIRONMENT_NOT_SETUP_WARNING = (props: Props) => {
 export const ERROR_500 = (props: Props) => {
     const error: any = useRouteError();
     const statusCode = error.status;
+    console.log(error);
     let message = `An unexpected error occurred: ${error.statusText}`;
-    if (statusCode === 503) {
+    if (statusCode === 503 || statusCode.startsWith('503')) {
         message = "The server is temporarily unable to handle your request.";
     }
 
