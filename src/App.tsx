@@ -11,7 +11,7 @@ import { useTitle } from './hooks/useTitle';
 import NewRecipeForm from './features/recipes/NewRecipeForm';
 import EditRecipeForm from './features/recipes/EditRecipeForm';
 import RecipeDetails from './features/recipes/RecipeDetails';
-import { NOT_FOUND_404 } from './components/Results';
+import { ERROR_500, NOT_FOUND_404 } from './components/Results';
 import UsersHome from './features/users/UsersHome';
 import RequireAuth from './features/auth/RequireAuth';
 import EditUserForm from './features/users/EditUserForm';
@@ -123,6 +123,11 @@ const App = () => {
                     element={
                         <div className='login-container'>
                             <NOT_FOUND_404 extra={<Link to="/">Back Home</Link>} />
+                        </div>
+                    }
+                    errorElement={
+                        <div className='login-container'>
+                            <ERROR_500 extra={<Link to="/">Back Home</Link>} />
                         </div>
                     }
                 />

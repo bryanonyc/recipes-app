@@ -1,8 +1,9 @@
 import { Result } from 'antd'
 import { ReactNode } from 'react';
+import { useRouteError } from 'react-router-dom';
 
 interface Props {
-    extra: ReactNode;
+    extra: ReactNode
 }
 
 export const FORBIDDEN_403 = (props: Props) => {
@@ -33,6 +34,24 @@ export const ENVIRONMENT_NOT_SETUP_WARNING = (props: Props) => {
             status="warning"
             title="Missing Environment Variable"
             subTitle="A required environment variable is missing.  Please set either API_ENDPOINT_BASE_URL or REACT_APP_API_ENDPOINT_BASE_URL"
+            extra={props.extra}
+        />
+    )
+}
+
+export const ERROR_500 = (props: Props) => {
+    const error: any = useRouteError();
+    const statusCode = error.status;
+    let message = `An unexpected error occurred: ${error.statusText}`;
+    if (statusCode === 503) {
+        message = "The server is temporarily unable to handle your request.";
+    }
+
+    return (
+        <Result
+            status="500"
+            title={statusCode}
+            subTitle={message}
             extra={props.extra}
         />
     )
